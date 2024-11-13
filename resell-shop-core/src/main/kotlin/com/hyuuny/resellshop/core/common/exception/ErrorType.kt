@@ -1,5 +1,5 @@
 package com.hyuuny.resellshop.core.common.exception
 
-enum class ErrorCode {
+enum class ErrorType {
     PRODUCT_NOT_FOUND,
 }

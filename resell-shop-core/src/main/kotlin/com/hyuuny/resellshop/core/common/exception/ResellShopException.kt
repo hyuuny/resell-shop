@@ -1,10 +1,10 @@
 package com.hyuuny.resellshop.core.common.exception
 
 open class ResellShopException(
-    val code: ErrorCode,
+    val code: ErrorType,
     override val message: String? = null,
 ) : RuntimeException(message)
 
 class ProductNotFoundException(
     message: String,
-) : ResellShopException(code= ErrorCode.PRODUCT_NOT_FOUND, message = message)
+) : ResellShopException(code= ErrorType.PRODUCT_NOT_FOUND, message = message)
