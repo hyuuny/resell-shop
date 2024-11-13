@@ -1,7 +1,7 @@
 package com.hyuuny.resellshop.config
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.hyuuny.resellshop.core.common.exception.ResellShopException
 import com.hyuuny.resellshop.core.common.response.ResellShopResponse
 import jakarta.persistence.EntityNotFoundException
@@ -27,8 +27,8 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     ): ResponseEntity<Any> {
         logger.error("Invalid message format", ex)
         val message = when (val cause = ex.cause) {
-            is MissingKotlinParameterException -> "${cause.parameter.name}: NULL is not allowed."
             is InvalidFormatException -> "Invalid format for field: ${cause.path.last().fieldName}"
+            is MismatchedInputException -> "${cause.path.joinToString() { it.fieldName }} is null"
             else -> cause?.message ?: "Invalid request format"
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
