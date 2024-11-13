@@ -1,5 +1,6 @@
 package com.hyuuny.resellshop.product.service
 
+import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import com.hyuuny.resellshop.products.service.CreateProductCommand
@@ -9,6 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.math.BigDecimal
@@ -95,4 +97,12 @@ class ProductServiceTest(
         }
     }
 
+    @Test
+    fun `존재하지 않는 상품은 조회할 수 없다`() {
+        val invalidId = 9999L
+        val exception = assertThrows<ProductNotFoundException> {
+            service.getProduct(invalidId)
+        }
+        assertThat(exception.message).isEqualTo("상품을 찾을 수 없습니다. id: $invalidId")
+    }
 }
