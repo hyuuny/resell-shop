@@ -59,4 +59,40 @@ class ProductServiceTest(
             assertThat(productImage.imageUrl).isEqualTo(command.images[index].imageUrl)
         }
     }
+
+    @Test
+    fun `상품을 조회할 수 있다`() {
+        val command = CreateProductCommand(
+            categoryId = 1L,
+            nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
+            brand = Brand.STUSSY,
+            nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
+            releasePrice = BigDecimal(82000),
+            modelNumber = "3903959",
+            releaseDate = LocalDate.of(2024, 9, 27),
+            option = "BLACK",
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            )
+        )
+        val savedProduct = service.create(command)
+
+        val product = service.getProduct(savedProduct.id)
+
+        assertThat(product.categoryId).isEqualTo(command.categoryId)
+        assertThat(product.nameEn).isEqualTo(command.nameEn)
+        assertThat(product.brand).isEqualTo(command.brand)
+        assertThat(product.nameKo).isEqualTo(command.nameKo)
+        assertThat(product.releasePrice!!.compareTo(command.releasePrice)).isEqualTo(0)
+        assertThat(product.modelNumber).isEqualTo(command.modelNumber)
+        assertThat(product.releaseDate).isEqualTo(command.releaseDate)
+        assertThat(product.option).isEqualTo(command.option)
+        assertThat(product.thumbnailUrl).isEqualTo(command.images.first().imageUrl)
+        assertThat(product.images.size).isEqualTo(command.images.size)
+        product.images.forEachIndexed { index, productImage ->
+            assertThat(productImage.imageUrl).isEqualTo(command.images[index].imageUrl)
+        }
+    }
+
 }
