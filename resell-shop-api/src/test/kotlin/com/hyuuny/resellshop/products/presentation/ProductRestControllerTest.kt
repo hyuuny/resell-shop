@@ -1,5 +1,6 @@
 package com.hyuuny.resellshop.products.presentation
 
+import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
@@ -233,4 +234,21 @@ class ProductRestControllerTest(
             log().all()
         }
     }
+
+    @Test
+    fun `존재하지 않는 상품은 조회할 수 없다`() {
+        Given {
+            contentType(ContentType.JSON)
+            pathParam("id", 9999999)
+            log().all()
+        } When {
+            get("/api/v1/products/{id}")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.PRODUCT_NOT_FOUND.name))
+            body("message", equalTo("상품을 찾을 수 없습니다. id: 9999999"))
+            log().all()
+        }
+    }
+
 }
