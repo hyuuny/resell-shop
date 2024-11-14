@@ -19,3 +19,9 @@ data class CreateProductCommand(
 data class ProductImageCommand(
     val imageUrl: String,
 )
+
+data class ProductSearchCommand(
+    val categoryId: Long? = null,
+    val brand: Brand? = null,
+    val nameKo: String? = null,
+)

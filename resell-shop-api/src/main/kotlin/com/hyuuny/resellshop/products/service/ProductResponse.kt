@@ -6,6 +6,24 @@ import com.hyuuny.resellshop.products.domain.ProductImage
 import java.math.BigDecimal
 import java.time.LocalDate
 
+data class ProductSearchResponse(
+    val id: Long,
+    val categoryId: Long,
+    val brand: Brand,
+    val nameEn: String,
+    val nameKo: String,
+    val thumbnailUrl: String,
+){
+    constructor(entity: Product) : this(
+        id = entity.id!!,
+        categoryId = entity.categoryId,
+        brand = entity.brand,
+        nameEn = entity.nameEn,
+        nameKo = entity.nameKo,
+        thumbnailUrl = entity.images.first().imageUrl,
+    )
+}
+
 data class ProductResponse(
     val id: Long,
     val categoryId: Long,
