@@ -1,22 +1,19 @@
-package com.hyuuny.resellshop.product.service
+package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
+import com.hyuuny.resellshop.products.TestEnvironment
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
-import com.hyuuny.resellshop.products.service.CreateProductCommand
-import com.hyuuny.resellshop.products.service.ProductImageCommand
-import com.hyuuny.resellshop.products.service.ProductService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import java.math.BigDecimal
 import java.time.LocalDate
 
-@SpringBootTest
+@TestEnvironment
 @DisplayName("상품 테스트")
 class ProductServiceTest(
     @Autowired private val repository: ProductRepository,
