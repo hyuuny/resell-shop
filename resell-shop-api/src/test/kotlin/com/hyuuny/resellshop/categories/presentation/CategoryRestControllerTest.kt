@@ -60,4 +60,41 @@ class CategoryRestControllerTest(
             log().all()
         }
     }
+
+    @Test
+    fun `부모 카테고리와 하위 카테고리 목록을 조회할 수 있다`() {
+        val parentCategory =
+            Category.of(null, "아우터", "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/outer.png")
+        val savedParentCategory = repository.save(parentCategory)
+        val childCategoryOne = Category.of(
+            savedParentCategory,
+            "패딩",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/padding.png"
+        )
+        val childCategoryTwo = Category.of(
+            savedParentCategory,
+            "코트",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/coat.png"
+        )
+        val childCategoryThree = Category.of(
+            savedParentCategory,
+            "자켓",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/jackets.png"
+        )
+        val childCategories = listOf(childCategoryOne, childCategoryTwo, childCategoryThree)
+        repository.saveAll(childCategories)
+        childCategories.forEach { savedParentCategory.addChild(it) }
+        repository.save(parentCategory)
+
+        Given {
+            contentType(ContentType.JSON)
+            log().all()
+        } When {
+            get("/api/v1/categories/${savedParentCategory.id}/children")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
+            body("data.size()", equalTo(childCategories.size))
+            log().all()
+        }
+    }
 }

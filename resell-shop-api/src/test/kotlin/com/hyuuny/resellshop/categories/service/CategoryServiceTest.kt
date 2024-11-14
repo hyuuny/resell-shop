@@ -44,4 +44,40 @@ class CategoryServiceTest(
             assertThat(categories[index].iconImageUrl).isEqualTo(category.iconImageUrl)
         }
     }
+
+    @Test
+    fun `부모 카테고리와 하위 카테고리 목록을 조회할 수 있다`() {
+        val parentCategory =
+            Category.of(null, "아우터", "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/outer.png")
+        val savedParentCategory = repository.save(parentCategory)
+        val childCategoryOne = Category.of(
+            savedParentCategory,
+            "패딩",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/padding.png"
+        )
+        val childCategoryTwo = Category.of(
+            savedParentCategory,
+            "코트",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/coat.png"
+        )
+        val childCategoryThree = Category.of(
+            savedParentCategory,
+            "자켓",
+            "https://my-bucket.s3.us-west-2.amazonaws.com/categories/icons/jackets.png"
+        )
+        val childCategories = listOf(childCategoryOne, childCategoryTwo, childCategoryThree)
+        repository.saveAll(childCategories)
+        childCategories.forEach { savedParentCategory.addChild(it) }
+        repository.save(parentCategory)
+
+        val foundCategories = service.findAllByParentId(savedParentCategory.id!!)
+
+        assertThat(foundCategories.size).isEqualTo(3)
+        foundCategories.forEachIndexed { index, childCategory ->
+            assertThat(childCategories[index].id).isEqualTo(childCategory.id)
+            assertThat(childCategories[index].parent!!.id).isEqualTo(parentCategory.id)
+            assertThat(childCategories[index].name).isEqualTo(childCategory.name)
+            assertThat(childCategories[index].iconImageUrl).isEqualTo(childCategory.iconImageUrl)
+        }
+    }
 }
