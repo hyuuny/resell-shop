@@ -119,4 +119,80 @@ class ProductRestControllerTest(
             log().all()
         }
     }
+
+    @Test
+    fun `상품을 검색할 수 있다`() {
+        val commandOne = CreateProductCommand(
+            categoryId = 1L,
+            nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
+            brand = Brand.STUSSY,
+            nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
+            releasePrice = BigDecimal(82000),
+            modelNumber = "3903959",
+            releaseDate = LocalDate.of(2024, 9, 27),
+            option = "BLACK",
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            )
+        )
+        val commandTwo = CreateProductCommand(
+            categoryId = 1L,
+            nameEn = "Nike x Off White NRG Fleece Hoodie Black",
+            brand = Brand.NIKE,
+            nameKo = "나이키 x 오프화이트 NRG 플리스 후디 블랙",
+            releasePrice = BigDecimal(139000),
+            modelNumber = "DN1760-010",
+            releaseDate = LocalDate.of(2022, 12, 21),
+            option = "BLACK",
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-3.jpg"),
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-4.jpg"),
+            )
+        )
+        val commandThree = CreateProductCommand(
+            categoryId = 2L,
+            nameEn = "Stussy Basic Zip Hoodie Black 2024",
+            brand = Brand.STUSSY,
+            nameKo = "스투시 베이직 후드 집업 블랙 2024",
+            releasePrice = BigDecimal(199000),
+            modelNumber = "197500/M",
+            option = "BLACK",
+            releaseDate = null,
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-5.jpg"),
+            )
+        )
+        val savedProductOne = service.create(commandOne)
+        service.create(commandTwo)
+        val savedProductThree = service.create(commandThree)
+
+        val searchCommand = ProductSearchCommand(nameKo = "스투시")
+        val pageable: Pageable = PageRequest.of(0, 10)
+
+        Given {
+            contentType(ContentType.JSON)
+            param("page", pageable.pageNumber)
+            param("size", pageable.pageSize)
+            param("sort", "id,DESC")
+            param("categoryId", searchCommand.categoryId)
+            param("brand", searchCommand.brand)
+            param("nameKo", searchCommand.nameKo)
+            log().all()
+        } When {
+            get("/api/v1/products")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
+            body("data.size()", equalTo(2))
+            body("data[0].id", equalTo(savedProductThree.id.toInt()))
+            body("data[0].categoryId", equalTo(savedProductThree.categoryId.toInt()))
+            body("data[0].nameKo", equalTo(savedProductThree.nameKo))
+            body("data[0].thumbnailUrl", equalTo(savedProductThree.images.first().imageUrl))
+            body("data[1].id", equalTo(savedProductOne.id.toInt()))
+            body("data[1].categoryId", equalTo(savedProductOne.categoryId.toInt()))
+            body("data[1].nameKo", equalTo(savedProductOne.nameKo))
+            body("data[1].thumbnailUrl", equalTo(savedProductOne.images.first().imageUrl))
+            log().all()
+        }
+    }
 }

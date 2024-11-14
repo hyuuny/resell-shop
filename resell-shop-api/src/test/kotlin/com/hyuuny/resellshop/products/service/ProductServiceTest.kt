@@ -171,4 +171,34 @@ class ProductServiceTest(
         assertThat(result[2].nameKo).isEqualTo(savedProductOne.nameKo)
         assertThat(result[2].thumbnailUrl).isEqualTo(savedProductOne.images.first().imageUrl)
     }
+
+    @Test
+    fun `상품을 검색할 수 있다`() {
+        // Given
+        val command = CreateProductCommand(
+            categoryId = 1L,
+            nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
+            brand = Brand.STUSSY,
+            nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
+            releasePrice = BigDecimal(82000),
+            modelNumber = "3903959",
+            releaseDate = LocalDate.of(2024, 9, 27),
+            option = "BLACK",
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            )
+        )
+        val savedProduct = service.create(command)
+        val searchCommand = ProductSearchCommand(nameKo = "스투시 x 아워레가시")
+        val pageable: Pageable = PageRequest.of(0, 10)
+
+        val result = service.getAllBySearchCommand(searchCommand, pageable)
+
+        assertThat(result).hasSize(1)
+        assertThat(result[0].id).isEqualTo(savedProduct.id)
+        assertThat(result[0].categoryId).isEqualTo(savedProduct.categoryId)
+        assertThat(result[0].nameKo).isEqualTo(savedProduct.nameKo)
+        assertThat(result[0].thumbnailUrl).isEqualTo(savedProduct.images.first().imageUrl)
+    }
 }
