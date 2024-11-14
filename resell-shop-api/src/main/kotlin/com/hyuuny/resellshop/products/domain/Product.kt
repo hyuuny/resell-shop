@@ -17,6 +17,8 @@ class Product(
     val option: String,
     @OneToMany(mappedBy = "product", cascade = [CascadeType.ALL], orphanRemoval = true)
     val images: MutableList<ProductImage> = mutableListOf(),
+    @OneToMany(mappedBy = "product", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val sizes: MutableList<ProductSize> = mutableListOf(),
 ) {
     companion object {
         fun of(
@@ -47,5 +49,14 @@ class Product(
 
     fun addImages(newImages: List<ProductImage>) {
         newImages.forEach { addImage(it) }
+    }
+
+    fun addSize(newSize: ProductSize) {
+        sizes.add(newSize)
+        newSize.product = this
+    }
+
+    fun addSizes(newSizes: List<ProductSize>) {
+        newSizes.forEach { addSize(it) }
     }
 }
