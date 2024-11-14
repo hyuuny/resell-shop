@@ -4,10 +4,7 @@ import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
-import com.hyuuny.resellshop.products.service.CreateProductCommand
-import com.hyuuny.resellshop.products.service.ProductImageCommand
-import com.hyuuny.resellshop.products.service.ProductSearchCommand
-import com.hyuuny.resellshop.products.service.ProductService
+import com.hyuuny.resellshop.products.service.*
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import io.restassured.module.kotlin.extensions.Given
@@ -56,6 +53,11 @@ class ProductRestControllerTest(
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val commandTwo = CreateProductCommand(
@@ -70,6 +72,11 @@ class ProductRestControllerTest(
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-3.jpg"),
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-4.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val commandThree = CreateProductCommand(
@@ -83,6 +90,11 @@ class ProductRestControllerTest(
             releaseDate = null,
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-5.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         service.create(commandOne)
@@ -134,6 +146,11 @@ class ProductRestControllerTest(
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val commandTwo = CreateProductCommand(
@@ -148,6 +165,11 @@ class ProductRestControllerTest(
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-3.jpg"),
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-4.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val commandThree = CreateProductCommand(
@@ -161,6 +183,11 @@ class ProductRestControllerTest(
             releaseDate = null,
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-5.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val savedProductOne = service.create(commandOne)
@@ -210,6 +237,11 @@ class ProductRestControllerTest(
             images = listOf(
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
                 ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            ),
+            sizes = listOf(
+                ProductSizeCommand("S"),
+                ProductSizeCommand("M"),
+                ProductSizeCommand("L"),
             )
         )
         val savedProduct = service.create(command)

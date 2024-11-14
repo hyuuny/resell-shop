@@ -3,6 +3,7 @@ package com.hyuuny.resellshop.products.service
 import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
 import com.hyuuny.resellshop.products.domain.Product
 import com.hyuuny.resellshop.products.domain.ProductImage
+import com.hyuuny.resellshop.products.domain.ProductSize
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
@@ -27,7 +28,10 @@ class ProductService(
             option = command.option,
         )
         val productImages = command.images.map { ProductImage.of(product, it.imageUrl) }
+        val productSizes = command.sizes.map { ProductSize.of(product, it.size) }
+
         product.addImages(productImages)
+        product.addSizes(productSizes)
 
         return ProductResponse(repository.save(product))
     }

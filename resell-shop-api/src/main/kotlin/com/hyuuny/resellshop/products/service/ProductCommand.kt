@@ -13,10 +13,15 @@ data class CreateProductCommand(
     val releaseDate: LocalDate?,
     val option: String,
     val images: List<ProductImageCommand>,
+    val sizes: List<ProductSizeCommand>,
 )
 
 data class ProductImageCommand(
     val imageUrl: String,
+)
+
+data class ProductSizeCommand(
+    val size: String,
 )
 
 data class ProductSearchCommand(
