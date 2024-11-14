@@ -8,3 +8,7 @@ open class ResellShopException(
 class ProductNotFoundException(
     message: String,
 ) : ResellShopException(code= ErrorType.PRODUCT_NOT_FOUND, message = message)
+
+class CategoryNotFoundException(
+    message: String,
+) : ResellShopException(code = ErrorType.CATEGORY_NOT_FOUND, message = message)
