@@ -3,7 +3,6 @@ package com.hyuuny.resellshop.products.service
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.domain.Product
 import com.hyuuny.resellshop.products.domain.ProductImage
-import java.math.BigDecimal
 import java.time.LocalDate
 
 data class ProductSearchResponse(
@@ -30,7 +29,7 @@ data class ProductResponse(
     val nameEn: String,
     val brand: Brand,
     val nameKo: String,
-    val releasePrice: BigDecimal?,
+    val releasePrice: Long?,
     val modelNumber: String,
     val releaseDate: LocalDate?,
     val option: String,

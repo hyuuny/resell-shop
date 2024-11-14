@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @TestEnvironment
@@ -50,7 +49,7 @@ class ProductRestControllerTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",
@@ -64,7 +63,7 @@ class ProductRestControllerTest(
             nameEn = "Nike x Off White NRG Fleece Hoodie Black",
             brand = Brand.NIKE,
             nameKo = "나이키 x 오프화이트 NRG 플리스 후디 블랙",
-            releasePrice = BigDecimal(139000),
+            releasePrice = 139000,
             modelNumber = "DN1760-010",
             releaseDate = LocalDate.of(2022, 12, 21),
             option = "BLACK",
@@ -78,7 +77,7 @@ class ProductRestControllerTest(
             nameEn = "Stussy Basic Zip Hoodie Black 2024",
             brand = Brand.STUSSY,
             nameKo = "스투시 베이직 후드 집업 블랙 2024",
-            releasePrice = BigDecimal(199000),
+            releasePrice = 199000,
             modelNumber = "197500/M",
             option = "BLACK",
             releaseDate = null,
@@ -128,7 +127,7 @@ class ProductRestControllerTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",
@@ -142,7 +141,7 @@ class ProductRestControllerTest(
             nameEn = "Nike x Off White NRG Fleece Hoodie Black",
             brand = Brand.NIKE,
             nameKo = "나이키 x 오프화이트 NRG 플리스 후디 블랙",
-            releasePrice = BigDecimal(139000),
+            releasePrice = 139000,
             modelNumber = "DN1760-010",
             releaseDate = LocalDate.of(2022, 12, 21),
             option = "BLACK",
@@ -156,7 +155,7 @@ class ProductRestControllerTest(
             nameEn = "Stussy Basic Zip Hoodie Black 2024",
             brand = Brand.STUSSY,
             nameKo = "스투시 베이직 후드 집업 블랙 2024",
-            releasePrice = BigDecimal(199000),
+            releasePrice = 199000,
             modelNumber = "197500/M",
             option = "BLACK",
             releaseDate = null,
@@ -204,7 +203,7 @@ class ProductRestControllerTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",

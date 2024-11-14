@@ -8,13 +8,13 @@ private const val ZERO_NUMBER = 0L
 
 @Embeddable
 data class Price(
-    @Column(nullable = false) val amount: BigDecimal
+    @Column(nullable = false) val amount: Long
 ) {
     init {
-        require(amount >= BigDecimal.ZERO)
+        require(amount >= 0) { "금액은 음수가 아니어야 합니다." }
     }
 
-    constructor(amount: Long) : this(BigDecimal.valueOf(amount))
+    constructor(amount: BigDecimal) : this(amount.toLong())
 
     companion object {
         val ZERO = Price(ZERO_NUMBER)
@@ -26,7 +26,7 @@ data class Price(
 
         other as Price
 
-        return amount.toDouble() == other.amount.toDouble()
+        return amount == other.amount // Long 타입에 맞게 비교
     }
 
     override fun hashCode(): Int {

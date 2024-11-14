@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @TestEnvironment
@@ -35,7 +34,7 @@ class ProductServiceTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",
@@ -69,7 +68,7 @@ class ProductServiceTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",
@@ -86,7 +85,7 @@ class ProductServiceTest(
         assertThat(product.nameEn).isEqualTo(command.nameEn)
         assertThat(product.brand).isEqualTo(command.brand)
         assertThat(product.nameKo).isEqualTo(command.nameKo)
-        assertThat(product.releasePrice!!.compareTo(command.releasePrice)).isEqualTo(0)
+        assertThat(product.releasePrice).isEqualTo(command.releasePrice)
         assertThat(product.modelNumber).isEqualTo(command.modelNumber)
         assertThat(product.releaseDate).isEqualTo(command.releaseDate)
         assertThat(product.option).isEqualTo(command.option)
@@ -113,7 +112,7 @@ class ProductServiceTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",
@@ -127,7 +126,7 @@ class ProductServiceTest(
             nameEn = "Nike x Off White NRG Fleece Hoodie Black",
             brand = Brand.NIKE,
             nameKo = "나이키 x 오프화이트 NRG 플리스 후디 블랙",
-            releasePrice = BigDecimal(139000),
+            releasePrice = 139000,
             modelNumber = "DN1760-010",
             releaseDate = LocalDate.of(2022, 12, 21),
             option = "BLACK",
@@ -141,7 +140,7 @@ class ProductServiceTest(
             nameEn = "Stussy Basic Zip Hoodie Black 2024",
             brand = Brand.STUSSY,
             nameKo = "스투시 베이직 후드 집업 블랙 2024",
-            releasePrice = BigDecimal(199000),
+            releasePrice = 199000,
             modelNumber = "197500/M",
             option = "BLACK",
             releaseDate = null,
@@ -180,7 +179,7 @@ class ProductServiceTest(
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
             brand = Brand.STUSSY,
             nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
-            releasePrice = BigDecimal(82000),
+            releasePrice = 82000,
             modelNumber = "3903959",
             releaseDate = LocalDate.of(2024, 9, 27),
             option = "BLACK",

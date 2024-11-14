@@ -1,7 +1,6 @@
 package com.hyuuny.resellshop.products.domain
 
 import jakarta.persistence.*
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @Entity
@@ -25,7 +24,7 @@ class Product(
             nameEn: String,
             nameKo: String,
             brand: Brand,
-            releasePrice: BigDecimal?,
+            releasePrice: Long?,
             modelNumber: String,
             releaseDate: LocalDate?,
             option: String
