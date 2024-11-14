@@ -195,4 +195,42 @@ class ProductRestControllerTest(
             log().all()
         }
     }
+
+    @Test
+    fun `상품을 조회할 수 있다`() {
+        val command = CreateProductCommand(
+            categoryId = 1L,
+            nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
+            brand = Brand.STUSSY,
+            nameKo = "스투시 x 아워레가시 워크샵 8볼 피그먼트 다이드 음양 티셔츠 블랙",
+            releasePrice = BigDecimal(82000),
+            modelNumber = "3903959",
+            releaseDate = LocalDate.of(2024, 9, 27),
+            option = "BLACK",
+            images = listOf(
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-1.jpg"),
+                ProductImageCommand("https://my-bucket.s3.us-west-2.amazonaws.com/products/images/sample-2.jpg"),
+            )
+        )
+        val savedProduct = service.create(command)
+
+        Given {
+            contentType(ContentType.JSON)
+            pathParam("id", savedProduct.id)
+            log().all()
+        } When {
+            get("/api/v1/products/{id}")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
+            body("id", equalTo(savedProduct.id.toInt()))
+            body("categoryId", equalTo(savedProduct.categoryId.toInt()))
+            body("nameEn", equalTo(savedProduct.nameEn))
+            body("nameKo", equalTo(savedProduct.nameKo))
+            body("brand", equalTo(savedProduct.brand.name))
+            body("releaseDate", equalTo(savedProduct.releaseDate.toString()))
+            body("option", equalTo(savedProduct.option))
+            body("thumbnailUrl", equalTo(savedProduct.images.first().imageUrl))
+            log().all()
+        }
+    }
 }
