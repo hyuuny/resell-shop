@@ -5,6 +5,7 @@ import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
+import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
 import com.hyuuny.resellshop.products.TestEnvironment
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -102,4 +103,20 @@ class BidServiceTest(
         }
         assertThat(exception.message).isEqualTo("이미 해당 상품에 대한 입찰이 존재합니다.")
     }
+
+    @Test
+    fun `입찰 가격은 0보다 커야 한다`() {
+        val command = CreateBidCommand(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 0,
+        )
+        val exception = assertThrows<InvalidBidPriceException> {
+            service.create(command)
+        }
+        assertThat(exception.message).isEqualTo("입찰 가격은 0보다 커야 합니다.")
+    }
+
 }
