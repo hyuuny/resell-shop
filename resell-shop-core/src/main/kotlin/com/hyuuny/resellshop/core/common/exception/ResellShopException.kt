@@ -12,3 +12,11 @@ class ProductNotFoundException(
 class CategoryNotFoundException(
     message: String,
 ) : ResellShopException(code = ErrorType.CATEGORY_NOT_FOUND, message = message)
+
+class AlreadyExistBidException(
+    message: String,
+) : ResellShopException(code = ErrorType.ALREADY_EXIST_BID, message = message)
+
+class InvalidBidPriceException(
+    message: String,
+) : ResellShopException(code = ErrorType.INVALID_BID_PRICE, message = message)
