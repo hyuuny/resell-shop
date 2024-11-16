@@ -16,6 +16,7 @@ class ProductService(
     private val repository: ProductRepository,
 ) {
 
+    @Transactional
     fun create(command: CreateProductCommand): ProductResponse {
         val product = Product.of(
             categoryId = command.categoryId,
