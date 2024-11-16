@@ -4,10 +4,14 @@ import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
+import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
 import com.hyuuny.resellshop.products.TestEnvironment
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 @TestEnvironment
 class BidServiceTest(
@@ -80,5 +84,22 @@ class BidServiceTest(
         assertThat(savedBidHistory.type).isEqualTo(savedBid.type)
         assertThat(savedBidHistory.status).isEqualTo(savedBid.status)
         assertThat(savedBidHistory.userId).isEqualTo(savedBid.userId)
+    }
+
+    @CsvSource("SELL", "BUY")
+    @ParameterizedTest
+    fun `같은 상품 사이즈의 중복 입찰을 등록할 수 없다`(type: BidType) {
+        val command = CreateBidCommand(
+            type = type,
+            userId = 2L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 50000,
+        )
+        service.create(command)
+        val exception = assertThrows<AlreadyExistBidException> {
+            service.create(command)
+        }
+        assertThat(exception.message).isEqualTo("이미 해당 상품에 대한 입찰이 존재합니다.")
     }
 }
