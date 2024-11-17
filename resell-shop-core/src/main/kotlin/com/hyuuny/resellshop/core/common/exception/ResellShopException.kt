@@ -20,3 +20,7 @@ class AlreadyExistBidException(
 class InvalidBidPriceException(
     message: String,
 ) : ResellShopException(code = ErrorType.INVALID_BID_PRICE, message = message)
+
+class BidNotFoundException(
+    message: String,
+) : ResellShopException(code = ErrorType.BID_NOT_FOUND, message = message)

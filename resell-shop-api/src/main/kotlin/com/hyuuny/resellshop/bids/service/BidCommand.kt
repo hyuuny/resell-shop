@@ -10,3 +10,6 @@ data class CreateBidCommand(
     val price: Long,
 )
 
+data class ChangePriceCommand(
+    val price: Long,
+)

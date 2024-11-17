@@ -4,6 +4,7 @@ import com.hyuuny.resellshop.bids.domain.Bid
 import com.hyuuny.resellshop.bids.domain.BidStatus.Companion.ongoingStatuses
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
+import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
 import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
 import com.hyuuny.resellshop.core.logging.Log
@@ -39,6 +40,14 @@ class BidService(
             createdAt = now,
         )
         return BidResponse(repository.save(bid))
+    }
+
+    @Transactional
+    fun changePrice(id: Long, command: ChangePriceCommand) {
+        validateBidPrice(command.price)
+
+        val bid = repository.findByIdOrNull(id) ?: throw BidNotFoundException("입찰 내역을 찾을 수 없습니다. id: $id")
+        bid.changePrice(command.price)
     }
 
     fun findAllMinPriceByProductId(productId: Long): ProductBidPriceResponse {

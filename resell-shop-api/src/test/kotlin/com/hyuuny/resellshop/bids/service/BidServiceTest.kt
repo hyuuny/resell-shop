@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.springframework.data.repository.findByIdOrNull
 import java.time.LocalDate
 
 @TestEnvironment
@@ -254,6 +255,26 @@ class BidServiceTest(
         assertThat(response.bidPriceDetails[7].productSizeId).isEqualTo(productSizes[3].id)
         assertThat(response.bidPriceDetails[7].type).isEqualTo(BidType.BUY)
         assertThat(response.bidPriceDetails[7].minPrice).isEqualTo(0)
+    }
+
+    @Test
+    fun `입찰 금액을 변경할 수 있다`() {
+        val command = CreateBidCommand(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 55000,
+        )
+        val savedBid = service.create(command)
+        val changePriceCommand = ChangePriceCommand(price = 60000)
+
+        service.changePrice(savedBid.id, changePriceCommand)
+
+        repository.findByIdOrNull(savedBid.id)!!.let {
+            assertThat(it).isNotNull()
+            assertThat(it.price.amount).isEqualTo(changePriceCommand.price)
+        }
     }
 
 }

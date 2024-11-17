@@ -5,4 +5,5 @@ enum class ErrorType {
     CATEGORY_NOT_FOUND,
     ALREADY_EXIST_BID,
     INVALID_BID_PRICE,
+    BID_NOT_FOUND,
 }
