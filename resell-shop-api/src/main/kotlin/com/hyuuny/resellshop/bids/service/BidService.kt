@@ -5,8 +5,11 @@ import com.hyuuny.resellshop.bids.domain.BidStatus.Companion.ongoingStatuses
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
+import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
 import com.hyuuny.resellshop.core.logging.Log
+import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import com.hyuuny.resellshop.utils.generateOrderNumber
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -15,6 +18,7 @@ import java.time.LocalDateTime
 @Service
 class BidService(
     private val repository: BidRepository,
+    private val productRepository: ProductRepository,
 ) {
     companion object : Log
 
@@ -35,6 +39,14 @@ class BidService(
             createdAt = now,
         )
         return BidResponse(repository.save(bid))
+    }
+
+    fun findAllMinPriceByProductId(productId: Long): ProductBidPriceResponse {
+        val product = productRepository.findByIdOrNull(productId)
+            ?: throw ProductNotFoundException("상품을 찾을 수 없습니다. id: $productId")
+        val productSizeIds = product.sizes.mapNotNull { it.id }.toSet()
+        val minBidPriceDetails = repository.findAllMinPriceByProductSizeIdIn(productSizeIds)
+        return ProductBidPriceResponse(productId, minBidPriceDetails)
     }
 
     private fun verifyExistsBid(command: CreateBidCommand) {

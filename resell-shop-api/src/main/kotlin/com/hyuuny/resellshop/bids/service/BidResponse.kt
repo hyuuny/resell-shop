@@ -28,3 +28,14 @@ data class BidResponse(
         createdAt = entity.createdAt,
     )
 }
+
+data class ProductBidPriceResponse(
+    val productId: Long,
+    val bidPriceDetails: List<BidPriceDetailsResponse>,
+)
+
+data class BidPriceDetailsResponse(
+    val productSizeId: Long?,
+    val type: BidType?,
+    val minPrice: Long?,
+)
