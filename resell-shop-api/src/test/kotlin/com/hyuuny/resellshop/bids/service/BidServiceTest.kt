@@ -5,6 +5,7 @@ import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
+import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
 import com.hyuuny.resellshop.products.TestEnvironment
 import com.hyuuny.resellshop.products.domain.Brand
@@ -275,6 +276,16 @@ class BidServiceTest(
             assertThat(it).isNotNull()
             assertThat(it.price.amount).isEqualTo(changePriceCommand.price)
         }
+    }
+
+    @Test
+    fun `존재하지 않는 입찰 내역의 금액을 변경할 수 없다`() {
+        val invalidId = 9999L
+        val changePriceCommand = ChangePriceCommand(price = 60000)
+        val exception = assertThrows<BidNotFoundException> {
+            service.changePrice(invalidId, changePriceCommand)
+        }
+        assertThat(exception.message).isEqualTo("입찰 내역을 찾을 수 없습니다. id: $invalidId")
     }
 
 }
