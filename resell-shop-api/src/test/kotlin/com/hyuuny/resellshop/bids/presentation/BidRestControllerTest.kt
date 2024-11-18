@@ -119,4 +119,30 @@ class BidRestControllerTest(
         verify(bidHistoryRepository, times(1)).save(any())
     }
 
+    @CsvSource("SELL", "BUY")
+    @ParameterizedTest
+    fun `같은 상품 사이즈의 중복 입찰을 등록할 수 없다`(type: BidType) {
+        val request = CreateBidRequest(
+            type = type,
+            userId = 2L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 43000,
+        )
+        service.create(request.toCommand())
+
+        Given {
+            contentType(ContentType.JSON)
+            body(request)
+            log().all()
+        } When {
+            post("/api/v1/bids")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.ALREADY_EXIST_BID.name))
+            body("message", equalTo("이미 해당 상품에 대한 입찰이 존재합니다."))
+            log().all()
+        }
+    }
+
 }
