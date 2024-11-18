@@ -87,4 +87,36 @@ class BidRestControllerTest(
         verify(bidHistoryRepository, times(1)).save(any())
     }
 
+    @Test
+    fun `구매자는 상품 구매 입찰을 등록할 수 있고, 입찰 히스토리도 저장된다`() {
+        val request = CreateBidRequest(
+            type = BidType.BUY,
+            userId = 2L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 43000,
+        )
+
+        Given {
+            contentType(ContentType.JSON)
+            body(request)
+            log().all()
+        } When {
+            post("/api/v1/bids")
+        } Then {
+            statusCode(HttpStatus.SC_CREATED)
+            body("id", notNullValue())
+            body("type", equalTo(request.type.name))
+            body("status", equalTo(BidStatus.WAITING.name))
+            body("orderNumber", notNullValue())
+            body("userId", equalTo(request.userId.toInt()))
+            body("productId", equalTo(request.productId.toInt()))
+            body("productSizeId", equalTo(request.productSizeId.toInt()))
+            body("price", equalTo(request.price.toInt()))
+            body("createdAt", notNullValue())
+            log().all()
+        }
+        verify(bidHistoryRepository, times(1)).save(any())
+    }
+
 }
