@@ -6,13 +6,7 @@ import com.hyuuny.resellshop.bids.service.ProductBidPriceResponse
 import com.hyuuny.resellshop.core.common.response.ResellShopResponse
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 @RequestMapping("/api/v1/bids")
@@ -26,6 +20,14 @@ class BidRestController(
         val bid = service.create(request.toCommand())
         return ResponseEntity.created(URI.create("/api/v1/bids/${bid.id}"))
             .body(ResellShopResponse.success(bid))
+    }
+
+    @GetMapping("/products/{productId}")
+    fun getAllMinPriceByProductId(
+        @PathVariable productId: Long
+    ): ResponseEntity<ResellShopResponse<ProductBidPriceResponse>> {
+        val productBidPriceResponse = service.findAllMinPriceByProductId(productId)
+        return ResponseEntity.ok(ResellShopResponse.success(productBidPriceResponse))
     }
 
 }
