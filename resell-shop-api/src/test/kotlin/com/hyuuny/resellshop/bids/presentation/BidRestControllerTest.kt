@@ -5,14 +5,8 @@ import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.bids.service.BidService
-import com.hyuuny.resellshop.bids.service.ChangePriceCommand
-import com.hyuuny.resellshop.bids.service.CreateBidCommand
 import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
-import com.hyuuny.resellshop.products.domain.Brand
-import com.hyuuny.resellshop.products.domain.Product
-import com.hyuuny.resellshop.products.domain.ProductImage
-import com.hyuuny.resellshop.products.domain.ProductSize
 import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
@@ -30,7 +24,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mockito.*
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.web.server.LocalServerPort
-import java.time.LocalDate
 
 @TestEnvironment
 class BidRestControllerTest(
@@ -141,6 +134,30 @@ class BidRestControllerTest(
             statusCode(HttpStatus.SC_BAD_REQUEST)
             body("code", equalTo(ErrorType.ALREADY_EXIST_BID.name))
             body("message", equalTo("이미 해당 상품에 대한 입찰이 존재합니다."))
+            log().all()
+        }
+    }
+
+    @Test
+    fun `입찰 가격은 0보다 커야 한다`() {
+        val request = CreateBidRequest(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 0,
+        )
+
+        Given {
+            contentType(ContentType.JSON)
+            body(request)
+            log().all()
+        } When {
+            post("/api/v1/bids")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.INVALID_BID_PRICE.name))
+            body("message", equalTo("입찰 가격은 0보다 커야 합니다."))
             log().all()
         }
     }
