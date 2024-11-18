@@ -5,6 +5,7 @@ import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.bids.service.BidService
+import com.hyuuny.resellshop.bids.service.ChangePriceCommand
 import com.hyuuny.resellshop.bids.service.CreateBidCommand
 import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
@@ -297,6 +298,31 @@ class BidRestControllerTest(
             body("bidPriceDetails[7].productSizeId", equalTo(productSizes[3].id?.toInt()))
             body("bidPriceDetails[7].type", equalTo("BUY"))
             body("bidPriceDetails[7].minPrice", equalTo(0))
+            log().all()
+        }
+    }
+
+    @Test
+    fun `입찰 금액을 변경할 수 있다`() {
+        val command = CreateBidCommand(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 55000,
+        )
+        val savedBid = service.create(command)
+        val changePriceCommand = ChangePriceCommand(price = 60000)
+
+        Given {
+            contentType(ContentType.JSON)
+            body(changePriceCommand)
+            pathParams("id", savedBid.id)
+            log().all()
+        } When {
+            patch("/api/v1/bids/{id}/change-price")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
             log().all()
         }
     }

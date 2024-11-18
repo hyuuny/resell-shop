@@ -19,3 +19,9 @@ data class CreateBidRequest(
         price = price,
     )
 }
+
+data class ChangePriceRequest(
+    val price: Long,
+) {
+    fun toCommand() = ChangePriceCommand(price)
+}

@@ -30,4 +30,13 @@ class BidRestController(
         return ResponseEntity.ok(ResellShopResponse.success(productBidPriceResponse))
     }
 
+    @PatchMapping("/{id}/change-price")
+    fun changePrice(
+        @PathVariable id: Long,
+        @RequestBody @Valid request: ChangePriceRequest
+    ): ResponseEntity<ResellShopResponse<Unit>> {
+        service.changePrice(id, request.toCommand())
+        return ResponseEntity.ok().build()
+    }
+
 }
