@@ -59,4 +59,6 @@ class Product(
     fun addSizes(newSizes: List<ProductSize>) {
         newSizes.forEach { addSize(it) }
     }
+
+    fun getFirstImageUrlOrEmpty(): String = images.firstOrNull()?.imageUrl ?: ""
 }

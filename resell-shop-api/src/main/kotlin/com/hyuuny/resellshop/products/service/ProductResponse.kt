@@ -19,7 +19,7 @@ data class ProductSearchResponse(
         brand = entity.brand,
         nameEn = entity.nameEn,
         nameKo = entity.nameKo,
-        thumbnailUrl = entity.images.first().imageUrl,
+        thumbnailUrl = entity.getFirstImageUrlOrEmpty(),
     )
 }
 
@@ -46,7 +46,7 @@ data class ProductResponse(
         modelNumber = entity.modelNumber,
         releaseDate = entity.releaseDate,
         option = entity.option,
-        thumbnailUrl = entity.images.first().imageUrl,
+        thumbnailUrl = entity.getFirstImageUrlOrEmpty(),
         images = entity.images.map { ProductImageResponse.of(it) },
     )
 }
