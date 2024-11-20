@@ -9,11 +9,11 @@ import com.hyuuny.resellshop.bids.service.ChangePriceCommand
 import com.hyuuny.resellshop.bids.service.CreateBidCommand
 import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
+import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.domain.Product
 import com.hyuuny.resellshop.products.domain.ProductImage
 import com.hyuuny.resellshop.products.domain.ProductSize
-import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import io.restassured.module.kotlin.extensions.Given

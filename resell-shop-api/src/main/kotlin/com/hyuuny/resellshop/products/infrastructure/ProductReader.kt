@@ -5,6 +5,10 @@ import com.hyuuny.resellshop.products.domain.Product
 import com.hyuuny.resellshop.products.service.ProductSearchCommand
 import org.springframework.data.domain.Pageable
 
-interface ProductRepositoryCustom {
-    fun findAllBySearchCommand(searchCondition: ProductSearchCommand, pageable: Pageable): SimplePage<Product>
+interface ProductReader {
+
+    fun findById(id: Long): Product
+
+    fun findAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<Product>
+
 }

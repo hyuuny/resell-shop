@@ -8,11 +8,11 @@ import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
 import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
 import com.hyuuny.resellshop.products.TestEnvironment
+import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.products.domain.Brand
 import com.hyuuny.resellshop.products.domain.Product
 import com.hyuuny.resellshop.products.domain.ProductImage
 import com.hyuuny.resellshop.products.domain.ProductSize
-import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

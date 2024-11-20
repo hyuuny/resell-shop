@@ -8,7 +8,7 @@ import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException
 import com.hyuuny.resellshop.core.common.exception.ProductNotFoundException
 import com.hyuuny.resellshop.core.logging.Log
-import com.hyuuny.resellshop.products.infrastructure.ProductRepository
+import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.utils.generateOrderNumber
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service

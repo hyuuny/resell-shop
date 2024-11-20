@@ -2,8 +2,8 @@ package com.hyuuny.resellshop.products.presentation
 
 import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.products.TestEnvironment
+import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.products.domain.Brand
-import com.hyuuny.resellshop.products.infrastructure.ProductRepository
 import com.hyuuny.resellshop.products.service.*
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
