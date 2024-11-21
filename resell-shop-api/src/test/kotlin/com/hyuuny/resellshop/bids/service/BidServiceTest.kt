@@ -1,9 +1,9 @@
 package com.hyuuny.resellshop.bids.service
 
+import com.hyuuny.resellshop.bids.dataaccess.BidHistoryRepository
+import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.BidType
-import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
-import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.core.common.exception.AlreadyExistBidException
 import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.exception.InvalidBidPriceException

@@ -1,7 +1,7 @@
 package com.hyuuny.resellshop.aspect
 
+import com.hyuuny.resellshop.bids.dataaccess.BidHistoryRepository
 import com.hyuuny.resellshop.bids.domain.BidHistory
-import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
 import com.hyuuny.resellshop.bids.service.BidResponse
 import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Aspect

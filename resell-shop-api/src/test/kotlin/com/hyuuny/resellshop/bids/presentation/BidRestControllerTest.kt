@@ -1,9 +1,9 @@
 package com.hyuuny.resellshop.bids.presentation
 
+import com.hyuuny.resellshop.bids.dataaccess.BidHistoryRepository
+import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.BidType
-import com.hyuuny.resellshop.bids.infrastructure.BidHistoryRepository
-import com.hyuuny.resellshop.bids.infrastructure.BidRepository
 import com.hyuuny.resellshop.bids.service.BidService
 import com.hyuuny.resellshop.bids.service.ChangePriceCommand
 import com.hyuuny.resellshop.bids.service.CreateBidCommand
