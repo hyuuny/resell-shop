@@ -1,7 +1,7 @@
 package com.hyuuny.resellshop.categories.service
 
+import com.hyuuny.resellshop.categories.dataaccess.CategoryRepository
 import com.hyuuny.resellshop.categories.domain.Category
-import com.hyuuny.resellshop.categories.infrastructure.CategoryRepository
 import com.hyuuny.resellshop.products.TestEnvironment
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach

@@ -1,7 +1,7 @@
 package com.hyuuny.resellshop.categories.presentation
 
+import com.hyuuny.resellshop.categories.dataaccess.CategoryRepository
 import com.hyuuny.resellshop.categories.domain.Category
-import com.hyuuny.resellshop.categories.infrastructure.CategoryRepository
 import com.hyuuny.resellshop.products.TestEnvironment
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
