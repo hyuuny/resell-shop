@@ -10,7 +10,7 @@ class BidHistoryWriterImpl(
 ) : BidHistoryWriter {
 
     override fun insert(insertBidHistory: InsertBidHistory): BidHistory {
-        val save = repository.save(
+        return repository.save(
             BidHistory.of(
                 bidId = insertBidHistory.bidId,
                 type = insertBidHistory.type,
@@ -19,7 +19,6 @@ class BidHistoryWriterImpl(
                 createdAt = insertBidHistory.createdAt,
             )
         )
-        return save
     }
 
 }
