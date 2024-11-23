@@ -18,13 +18,14 @@ class BidHistoryAspect(
         returning = "bid"
     )
     fun saveBidHistory(bid: BidResponse) {
-        val bidHistory = BidHistory.of(
-            bidId = bid.id,
-            type = bid.type,
-            status = bid.status,
-            userId = bid.userId,
-            createdAt = bid.createdAt,
+        repository.save(
+            BidHistory.of(
+                bidId = bid.id,
+                type = bid.type,
+                status = bid.status,
+                userId = bid.userId,
+                createdAt = bid.createdAt,
+            )
         )
-        repository.save(bidHistory)
     }
 }
