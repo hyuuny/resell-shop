@@ -7,6 +7,8 @@ import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
 import com.hyuuny.resellshop.orders.dataaccess.OrderHistoryRepository
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
 import com.hyuuny.resellshop.orders.domain.OrderStatus
+import com.hyuuny.resellshop.orders.service.CreateOrderCommand
+import com.hyuuny.resellshop.orders.service.OrderService
 import com.hyuuny.resellshop.products.TestEnvironment
 import com.hyuuny.resellshop.utils.generateOrderNumber
 import io.restassured.RestAssured
@@ -32,6 +34,7 @@ class OrderRestControllerTest(
     private val repository: OrderRepository,
     private val orderHistoryRepository: OrderHistoryRepository,
     private val bidRepository: BidRepository,
+    private val service: OrderService,
 ) {
 
     @MockBean
@@ -89,6 +92,45 @@ class OrderRestControllerTest(
         }
         verify(bidEventListener, times(1))
             .changeStatusEvent(BidStatusChangedEvent(request.bidId, BidStatus.COMPLETED))
+    }
+
+    @Test
+    fun `주문을 조회할 수 있다`() {
+        val commission = 3200L
+        val deliveryFee = 3000L
+        val productPrice = 20000L
+        val totalPrice = commission + deliveryFee + productPrice
+        val command = CreateOrderCommand(
+            orderNumber = generateOrderNumber(LocalDateTime.now()),
+            sellerId = 1L,
+            buyerId = 2L,
+            bidId = 1L,
+            commission = commission,
+            deliveryFee = deliveryFee,
+            productPrice = productPrice,
+            totalPrice = totalPrice,
+        )
+        val order = service.create(command)
+
+        Given {
+            contentType(ContentType.JSON)
+            log().all()
+        } When {
+            get("/api/v1/orders/${order.id}")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
+            body("id", equalTo(order.id.toInt()))
+            body("status", equalTo(OrderStatus.CREATED.name))
+            body("orderNumber", equalTo(order.orderNumber))
+            body("sellerId", equalTo(order.sellerId.toInt()))
+            body("buyerId", equalTo(order.buyerId.toInt()))
+            body("commission", equalTo(order.commission.toInt()))
+            body("deliveryFee", equalTo(order.deliveryFee.toInt()))
+            body("productPrice", equalTo(order.productPrice.toInt()))
+            body("totalPrice", equalTo(order.totalPrice.toInt()))
+            body("createdAt", notNullValue())
+            log().all()
+        }
     }
 
 }

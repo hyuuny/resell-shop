@@ -7,7 +7,7 @@ open class ResellShopException(
 
 class ProductNotFoundException(
     message: String,
-) : ResellShopException(code= ErrorType.PRODUCT_NOT_FOUND, message = message)
+) : ResellShopException(code = ErrorType.PRODUCT_NOT_FOUND, message = message)
 
 class CategoryNotFoundException(
     message: String,
@@ -24,3 +24,7 @@ class InvalidBidPriceException(
 class BidNotFoundException(
     message: String,
 ) : ResellShopException(code = ErrorType.BID_NOT_FOUND, message = message)
+
+class OrderNotFoundException(
+    message: String,
+) : ResellShopException(code = ErrorType.ORDER_NOT_FOUND, message = message)

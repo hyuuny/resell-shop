@@ -6,4 +6,5 @@ enum class ErrorType {
     ALREADY_EXIST_BID,
     INVALID_BID_PRICE,
     BID_NOT_FOUND,
+    ORDER_NOT_FOUND,
 }

@@ -5,10 +5,7 @@ import com.hyuuny.resellshop.orders.service.OrderResponse
 import com.hyuuny.resellshop.orders.service.OrderService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 @RequestMapping("/api/v1/orders")
@@ -23,5 +20,9 @@ class OrderRestController(
         return ResponseEntity.created(URI.create("/api/v1/orders/${order.id}"))
             .body(ResellShopResponse.success(order))
     }
+
+    @GetMapping("/{id}")
+    fun getOrder(@PathVariable id: Long): ResponseEntity<ResellShopResponse<OrderResponse>> =
+        ResponseEntity.ok(ResellShopResponse.success(service.findById(id)))
 
 }
