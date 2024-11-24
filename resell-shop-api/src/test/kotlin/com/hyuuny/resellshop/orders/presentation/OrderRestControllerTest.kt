@@ -4,6 +4,7 @@ import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.event.BidEventListener
 import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
+import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.orders.dataaccess.OrderHistoryRepository
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
 import com.hyuuny.resellshop.orders.domain.OrderStatus
@@ -129,6 +130,24 @@ class OrderRestControllerTest(
             body("productPrice", equalTo(order.productPrice.toInt()))
             body("totalPrice", equalTo(order.totalPrice.toInt()))
             body("createdAt", notNullValue())
+            log().all()
+        }
+    }
+
+    @Test
+    fun `존재하지 않는 주문은 조회할 수 없다`() {
+        val invalidId = 999999
+
+        Given {
+            contentType(ContentType.JSON)
+            pathParams("id", invalidId)
+            log().all()
+        } When {
+            get("/api/v1/orders/{id}")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.ORDER_NOT_FOUND.name))
+            body("message", equalTo("주문을 찾을 수 없습니다. id: $invalidId"))
             log().all()
         }
     }

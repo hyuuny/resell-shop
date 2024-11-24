@@ -4,6 +4,7 @@ import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.event.BidEventListener
 import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
+import com.hyuuny.resellshop.core.common.exception.OrderNotFoundException
 import com.hyuuny.resellshop.orders.dataaccess.OrderHistoryRepository
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
 import com.hyuuny.resellshop.orders.domain.OrderStatus
@@ -12,6 +13,7 @@ import com.hyuuny.resellshop.utils.generateOrderNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -109,6 +111,16 @@ class OrderServiceTest(
         assertThat(savedOrder.productPrice).isEqualTo(command.productPrice)
         assertThat(savedOrder.totalPrice).isEqualTo(command.totalPrice)
         assertThat(savedOrder.createdAt).isNotNull()
+    }
+
+    @Test
+    fun `존재하지 않는 주문은 조회할 수 없다`() {
+        val invalidId = 99999L
+
+        val exception = assertThrows<OrderNotFoundException> {
+            service.findById(invalidId)
+        }
+        assertThat(exception.message).isEqualTo("주문을 찾을 수 없습니다. id: $invalidId")
     }
 
 }
