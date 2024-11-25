@@ -1,5 +1,6 @@
 package com.hyuuny.resellshop.products.service
 
+import com.hyuuny.resellshop.core.common.response.SimplePage
 import com.hyuuny.resellshop.products.infrastructure.ProductReader
 import com.hyuuny.resellshop.products.infrastructure.ProductWriter
 import org.springframework.data.domain.Pageable
@@ -24,8 +25,9 @@ class ProductService(
         return ProductResponse(product)
     }
 
-    fun getAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): List<ProductSearchResponse> {
+    fun getAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<ProductSearchResponse> {
         val page = reader.findAllBySearchCommand(searchCommand, pageable)
-        return page.content.map { ProductSearchResponse(it) }
+        val content = page.content.map { ProductSearchResponse(it) }
+        return SimplePage(content, page)
     }
 }

@@ -181,24 +181,23 @@ class ProductServiceTest(
 
         val result = service.getAllBySearchCommand(searchCommand, pageable)
 
-        assertThat(result).hasSize(3)
-        assertThat(result[0].id).isEqualTo(savedProductThree.id)
-        assertThat(result[0].categoryId).isEqualTo(savedProductThree.categoryId)
-        assertThat(result[0].nameKo).isEqualTo(savedProductThree.nameKo)
-        assertThat(result[0].thumbnailUrl).isEqualTo(savedProductThree.images.first().imageUrl)
-        assertThat(result[1].id).isEqualTo(savedProductTwo.id)
-        assertThat(result[1].categoryId).isEqualTo(savedProductTwo.categoryId)
-        assertThat(result[1].nameKo).isEqualTo(savedProductTwo.nameKo)
-        assertThat(result[1].thumbnailUrl).isEqualTo(savedProductTwo.images.first().imageUrl)
-        assertThat(result[2].id).isEqualTo(savedProductOne.id)
-        assertThat(result[2].categoryId).isEqualTo(savedProductOne.categoryId)
-        assertThat(result[2].nameKo).isEqualTo(savedProductOne.nameKo)
-        assertThat(result[2].thumbnailUrl).isEqualTo(savedProductOne.images.first().imageUrl)
+        assertThat(result.content).hasSize(3)
+        assertThat(result.content[0].id).isEqualTo(savedProductThree.id)
+        assertThat(result.content[0].categoryId).isEqualTo(savedProductThree.categoryId)
+        assertThat(result.content[0].nameKo).isEqualTo(savedProductThree.nameKo)
+        assertThat(result.content[0].thumbnailUrl).isEqualTo(savedProductThree.images.first().imageUrl)
+        assertThat(result.content[1].id).isEqualTo(savedProductTwo.id)
+        assertThat(result.content[1].categoryId).isEqualTo(savedProductTwo.categoryId)
+        assertThat(result.content[1].nameKo).isEqualTo(savedProductTwo.nameKo)
+        assertThat(result.content[1].thumbnailUrl).isEqualTo(savedProductTwo.images.first().imageUrl)
+        assertThat(result.content[2].id).isEqualTo(savedProductOne.id)
+        assertThat(result.content[2].categoryId).isEqualTo(savedProductOne.categoryId)
+        assertThat(result.content[2].nameKo).isEqualTo(savedProductOne.nameKo)
+        assertThat(result.content[2].thumbnailUrl).isEqualTo(savedProductOne.images.first().imageUrl)
     }
 
     @Test
     fun `상품을 검색할 수 있다`() {
-        // Given
         val command = CreateProductCommand(
             categoryId = 1L,
             nameEn = "Stussy x Our Legacy Work Shop 8 Ball Pigment Dyed Yin Yang T-Shirt Black",
@@ -224,10 +223,10 @@ class ProductServiceTest(
 
         val result = service.getAllBySearchCommand(searchCommand, pageable)
 
-        assertThat(result).hasSize(1)
-        assertThat(result[0].id).isEqualTo(savedProduct.id)
-        assertThat(result[0].categoryId).isEqualTo(savedProduct.categoryId)
-        assertThat(result[0].nameKo).isEqualTo(savedProduct.nameKo)
-        assertThat(result[0].thumbnailUrl).isEqualTo(savedProduct.images.first().imageUrl)
+        assertThat(result.content).hasSize(1)
+        assertThat(result.content[0].id).isEqualTo(savedProduct.id)
+        assertThat(result.content[0].categoryId).isEqualTo(savedProduct.categoryId)
+        assertThat(result.content[0].nameKo).isEqualTo(savedProduct.nameKo)
+        assertThat(result.content[0].thumbnailUrl).isEqualTo(savedProduct.images.first().imageUrl)
     }
 }

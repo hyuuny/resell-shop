@@ -1,6 +1,7 @@
 package com.hyuuny.resellshop.products.presentation
 
 import com.hyuuny.resellshop.core.common.response.ResellShopResponse
+import com.hyuuny.resellshop.core.common.response.SimplePage
 import com.hyuuny.resellshop.products.service.ProductResponse
 import com.hyuuny.resellshop.products.service.ProductSearchCommand
 import com.hyuuny.resellshop.products.service.ProductSearchResponse
@@ -24,7 +25,7 @@ class ProductRestController(
     fun getAllBySearchCommand(
         searchCommand: ProductSearchCommand,
         @PageableDefault(sort = ["id"], direction = Sort.Direction.DESC) pageable: Pageable
-    ): ResponseEntity<ResellShopResponse<List<ProductSearchResponse>>> {
+    ): ResponseEntity<ResellShopResponse<SimplePage<ProductSearchResponse>>> {
         val products = service.getAllBySearchCommand(searchCommand, pageable)
         return ResponseEntity.ok(ResellShopResponse.success(products))
     }
