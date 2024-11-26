@@ -11,13 +11,9 @@ class CategoryReaderImpl(
     private val repository: CategoryRepository,
 ) : CategoryReader {
 
-    override fun findById(id: Long): Category {
-        return repository.findByIdOrNull(id)
-            ?: throw CategoryNotFoundException("카테고리를 찾을 수 없습니다. id: $id")
-    }
+    override fun read(id: Long): Category = repository.findByIdOrNull(id)
+        ?: throw CategoryNotFoundException("카테고리를 찾을 수 없습니다. id: $id")
 
-    override fun findAll(): List<Category> {
-        return repository.findAll()
-    }
+    override fun readAll(): List<Category> = repository.findAll()
 
 }

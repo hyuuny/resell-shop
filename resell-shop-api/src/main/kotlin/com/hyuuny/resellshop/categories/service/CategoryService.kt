@@ -11,11 +11,10 @@ class CategoryService(
 ) {
 
     fun findAll(): List<CategoryResponse> {
-        return reader.findAll().map { CategoryResponse(it) }
+        return reader.readAll().map { CategoryResponse(it) }
     }
 
     fun findAllByParentId(id: Long): List<CategoryResponse> {
-        val category = reader.findById(id)
-        return category.children.map { CategoryResponse(it) }
+        return reader.read(id).children.map { CategoryResponse(it) }
     }
 }

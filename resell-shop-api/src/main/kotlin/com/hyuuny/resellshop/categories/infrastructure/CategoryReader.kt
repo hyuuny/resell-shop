@@ -4,8 +4,8 @@ import com.hyuuny.resellshop.categories.domain.Category
 
 interface CategoryReader {
 
-    fun findById(id: Long): Category
+    fun read(id: Long): Category
 
-    fun findAll(): List<Category>
+    fun readAll(): List<Category>
 
 }
