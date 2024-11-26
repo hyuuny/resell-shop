@@ -16,7 +16,7 @@ class BidEventListener(
     @Async
     @TransactionalEventListener
     fun changeStatusEvent(event: BidStatusChangedEvent) {
-        val bid = reader.findById(event.bidId)
+        val bid = reader.read(event.bidId)
         bid.changeStatus(event.status)
         bidHistoryWriter.insert(InsertBidHistory(bid))
     }

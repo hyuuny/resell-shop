@@ -15,18 +15,18 @@ class BidWriterImpl(
     private val repository: BidRepository,
 ) : BidWriter {
 
-    override fun insert(insertBid: InsertBid): Bid {
-        verifyExistsBid(insertBid.type, insertBid.userId, insertBid.productSizeId)
-        validateBidPrice(insertBid.price)
+    override fun write(newBid: NewBid): Bid {
+        verifyExistsBid(newBid.type, newBid.userId, newBid.productSizeId)
+        validateBidPrice(newBid.price)
 
         val now = LocalDateTime.now()
         val bid = Bid.of(
-            type = insertBid.type,
+            type = newBid.type,
             orderNumber = generateOrderNumber(now),
-            userId = insertBid.userId,
-            productId = insertBid.productId,
-            productSizeId = insertBid.productSizeId,
-            price = insertBid.price,
+            userId = newBid.userId,
+            productId = newBid.productId,
+            productSizeId = newBid.productSizeId,
+            price = newBid.price,
             createdAt = now,
         )
         return repository.save(bid)

@@ -19,20 +19,19 @@ class BidService(
     @Transactional
     fun create(command: CreateBidCommand): BidResponse {
         log.info("입찰 등록 요청: $command")
-        val newBid = writer.insert(command.toInsertBid())
+        val newBid = writer.write(command.toNewtBid())
         return BidResponse(newBid)
     }
 
     @Transactional
     fun changePrice(id: Long, command: ChangePriceCommand) {
-        val bid = reader.findById(id)
+        val bid = reader.read(id)
         bid.changePrice(command.price)
     }
 
     fun findAllMinPriceByProductId(productId: Long): ProductBidPriceResponse {
-        val product = productReader.findById(productId)
-        val productSizeIds = product.sizes.mapNotNull { it.id }.toSet()
-        val minBidPriceDetails = reader.findAllMinPriceByProductSizeIdIn(productSizeIds)
+        val product = productReader.read(productId)
+        val minBidPriceDetails = reader.readMinPriceProductSizes(product.sizes.mapNotNull { it.id }.toSet())
         return ProductBidPriceResponse(productId, minBidPriceDetails)
     }
 

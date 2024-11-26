@@ -5,8 +5,8 @@ import com.hyuuny.resellshop.bids.service.BidPriceDetailsResponse
 
 interface BidReader {
 
-    fun findById(id: Long): Bid
+    fun read(id: Long): Bid
 
-    fun findAllMinPriceByProductSizeIdIn(productSizeIds: Collection<Long>): List<BidPriceDetailsResponse>
+    fun readMinPriceProductSizes(productSizeIds: Collection<Long>): List<BidPriceDetailsResponse>
 
 }

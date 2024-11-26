@@ -3,7 +3,7 @@ package com.hyuuny.resellshop.bids.infrastructure
 import com.hyuuny.resellshop.bids.domain.Bid
 import com.hyuuny.resellshop.bids.domain.BidType
 
-data class InsertBid(
+data class NewBid(
     val type: BidType,
     val userId: Long,
     val productId: Long,

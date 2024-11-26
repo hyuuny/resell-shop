@@ -4,7 +4,7 @@ import com.hyuuny.resellshop.bids.domain.Bid
 
 interface BidWriter {
 
-    fun insert(insertBid: InsertBid): Bid
+    fun write(newBid: NewBid): Bid
 
     fun changePrice(changePriceBid: ChangePriceBid)
 

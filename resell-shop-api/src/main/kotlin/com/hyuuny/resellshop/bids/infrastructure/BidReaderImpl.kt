@@ -12,9 +12,9 @@ class BidReaderImpl(
     private val repository: BidRepository,
 ) : BidReader {
 
-    override fun findById(id: Long): Bid =
+    override fun read(id: Long): Bid =
         repository.findByIdOrNull(id) ?: throw BidNotFoundException("입찰 내역을 찾을 수 없습니다. id: $id")
 
-    override fun findAllMinPriceByProductSizeIdIn(productSizeIds: Collection<Long>): List<BidPriceDetailsResponse> =
+    override fun readMinPriceProductSizes(productSizeIds: Collection<Long>): List<BidPriceDetailsResponse> =
         repository.findAllMinPriceByProductSizeIdIn(productSizeIds)
 }
