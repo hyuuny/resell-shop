@@ -184,4 +184,43 @@ class OrderRestControllerTest(
         }
     }
 
+    @CsvSource(
+        "SELLER_PRODUCT_DELIVERING",
+        "COMPLETED_IN_STOCK",
+        "INSPECTION",
+        "INSPECTION_PASSED",
+        "CANCELLED",
+        "DELIVERING_TO_BUYER",
+        "DELIVERED"
+    )
+    @ParameterizedTest
+    fun `주문이 정상적으로 진행중이라면 주문을 취소할 수 없다`(status: OrderStatus) {
+        val order = Order.of(
+            status = status,
+            orderNumber = generateOrderNumber(LocalDateTime.now()),
+            sellerId = 1L,
+            buyerId = 2L,
+            bidId = 1L,
+            commission = 3200L,
+            deliveryFee = 3000L,
+            productPrice = 20000L,
+            totalPrice = 3200L + 3000L + 20000L,
+            createdAt = LocalDateTime.now(),
+        )
+        val savedOrder = repository.save(order)
+
+        Given {
+            contentType(ContentType.JSON)
+            pathParams("id", savedOrder.id)
+            log().all()
+        } When {
+            patch("/api/v1/orders/{id}/cancel")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.NOT_CANCELABLE_ORDER.name))
+            body("message", equalTo("주문을 취소할 수 상태입니다."))
+            log().all()
+        }
+    }
+
 }

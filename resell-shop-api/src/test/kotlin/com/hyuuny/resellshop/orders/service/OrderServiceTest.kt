@@ -4,6 +4,7 @@ import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.event.BidEventListener
 import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
+import com.hyuuny.resellshop.core.common.exception.NotCancelableOrderException
 import com.hyuuny.resellshop.core.common.exception.OrderNotFoundException
 import com.hyuuny.resellshop.orders.dataaccess.OrderHistoryRepository
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
@@ -159,6 +160,37 @@ class OrderServiceTest(
         repository.findByIdOrNull(savedOrder.id!!)!!.let { assertThat(it.status).isEqualTo(OrderStatus.CANCELLED) }
         verify(bidEventListener, times(1))
             .changeStatusEvent(BidStatusChangedEvent(order.bidId, BidStatus.CANCELLED))
+    }
+
+    @CsvSource(
+        "SELLER_PRODUCT_DELIVERING",
+        "COMPLETED_IN_STOCK",
+        "INSPECTION",
+        "INSPECTION_PASSED",
+        "CANCELLED",
+        "DELIVERING_TO_BUYER",
+        "DELIVERED"
+    )
+    @ParameterizedTest
+    fun `주문이 정상적으로 진행중이라면 주문을 취소할 수 없다`(status: OrderStatus) {
+        val order = Order.of(
+            status = status,
+            orderNumber = generateOrderNumber(LocalDateTime.now()),
+            sellerId = 1L,
+            buyerId = 2L,
+            bidId = 1L,
+            commission = 3200L,
+            deliveryFee = 3000L,
+            productPrice = 20000L,
+            totalPrice = 3200L + 3000L + 20000L,
+            createdAt = LocalDateTime.now(),
+        )
+        val savedOrder = repository.save(order)
+
+        val exception = assertThrows<NotCancelableOrderException> {
+            service.cancel(savedOrder.id!!)
+        }
+        assertThat(exception.message).isEqualTo("주문을 취소할 수 상태입니다.")
     }
 
 }
