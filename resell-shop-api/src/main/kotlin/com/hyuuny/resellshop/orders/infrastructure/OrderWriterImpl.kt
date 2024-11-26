@@ -1,5 +1,6 @@
 package com.hyuuny.resellshop.orders.infrastructure
 
+import com.hyuuny.resellshop.core.common.exception.NotCancelableOrderException
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
 import com.hyuuny.resellshop.orders.domain.Order
 import com.hyuuny.resellshop.orders.domain.OrderStatus
@@ -25,4 +26,9 @@ class OrderWriterImpl(
             createdAt = LocalDateTime.now(),
         )
     )
+
+    override fun cancel(order: Order) {
+        if (!order.isCancelable()) throw NotCancelableOrderException("주문을 취소할 수 상태입니다.")
+        order.cancel()
+    }
 }

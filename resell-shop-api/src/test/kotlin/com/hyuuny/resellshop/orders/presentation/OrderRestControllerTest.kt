@@ -7,6 +7,7 @@ import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
 import com.hyuuny.resellshop.core.common.exception.ErrorType
 import com.hyuuny.resellshop.orders.dataaccess.OrderHistoryRepository
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
+import com.hyuuny.resellshop.orders.domain.Order
 import com.hyuuny.resellshop.orders.domain.OrderStatus
 import com.hyuuny.resellshop.orders.service.CreateOrderCommand
 import com.hyuuny.resellshop.orders.service.OrderService
@@ -23,6 +24,8 @@ import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -148,6 +151,35 @@ class OrderRestControllerTest(
             statusCode(HttpStatus.SC_BAD_REQUEST)
             body("code", equalTo(ErrorType.ORDER_NOT_FOUND.name))
             body("message", equalTo("주문을 찾을 수 없습니다. id: $invalidId"))
+            log().all()
+        }
+    }
+
+    @CsvSource("CREATED", "INSPECTION_FAILED")
+    @ParameterizedTest
+    fun `주문 내역을 취소할 수 있다`(status: OrderStatus) {
+        val order = Order.of(
+            status = status,
+            orderNumber = generateOrderNumber(LocalDateTime.now()),
+            sellerId = 1L,
+            buyerId = 2L,
+            bidId = 1L,
+            commission = 3200L,
+            deliveryFee = 3000L,
+            productPrice = 20000L,
+            totalPrice = 3200L + 3000L + 20000L,
+            createdAt = LocalDateTime.now(),
+        )
+        val savedOrder = repository.save(order)
+
+        Given {
+            contentType(ContentType.JSON)
+            pathParams("id", savedOrder.id)
+            log().all()
+        } When {
+            patch("/api/v1/orders/{id}/cancel")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
             log().all()
         }
     }

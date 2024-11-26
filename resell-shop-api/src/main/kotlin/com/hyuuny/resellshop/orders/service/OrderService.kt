@@ -25,4 +25,11 @@ class OrderService(
 
     fun findById(id: Long): OrderResponse = OrderResponse(reader.findById(id))
 
+    @Transactional
+    fun cancel(id: Long) {
+        val order = reader.findById(id)
+        writer.cancel(order)
+        eventPublisher.publishEvent(BidStatusChangedEvent(order.bidId, BidStatus.CANCELLED))
+    }
+
 }

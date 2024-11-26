@@ -7,4 +7,5 @@ enum class ErrorType {
     INVALID_BID_PRICE,
     BID_NOT_FOUND,
     ORDER_NOT_FOUND,
+    NOT_CANCELABLE_ORDER,
 }

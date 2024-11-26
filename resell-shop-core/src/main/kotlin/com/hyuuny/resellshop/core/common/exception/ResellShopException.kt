@@ -28,3 +28,7 @@ class BidNotFoundException(
 class OrderNotFoundException(
     message: String,
 ) : ResellShopException(code = ErrorType.ORDER_NOT_FOUND, message = message)
+
+class NotCancelableOrderException(
+    message: String,
+) : ResellShopException(code = ErrorType.NOT_CANCELABLE_ORDER, message = message)

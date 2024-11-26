@@ -25,4 +25,9 @@ class OrderRestController(
     fun getOrder(@PathVariable id: Long): ResponseEntity<ResellShopResponse<OrderResponse>> =
         ResponseEntity.ok(ResellShopResponse.success(service.findById(id)))
 
+    @PatchMapping("/{id}/cancel")
+    fun cancelOrder(@PathVariable id: Long): ResponseEntity<ResellShopResponse<Unit>> {
+        service.cancel(id)
+        return ResponseEntity.ok().build()
+    }
 }

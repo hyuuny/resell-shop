@@ -6,4 +6,5 @@ interface OrderWriter {
 
     fun insert(insertOrder: InsertOrder): Order
 
+    fun cancel(order: Order)
 }

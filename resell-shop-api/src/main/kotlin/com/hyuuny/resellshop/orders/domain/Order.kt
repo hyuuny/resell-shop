@@ -50,4 +50,9 @@ class Order(
         )
     }
 
+    fun isCancelable(): Boolean = OrderStatus.cancelableStatus.contains(status)
+
+    fun cancel() {
+        status = OrderStatus.CANCELLED
+    }
 }
