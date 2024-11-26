@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable
 
 interface ProductReader {
 
-    fun findById(id: Long): Product
+    fun read(id: Long): Product
 
-    fun findAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<Product>
+    fun readPage(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<Product>
 
 }

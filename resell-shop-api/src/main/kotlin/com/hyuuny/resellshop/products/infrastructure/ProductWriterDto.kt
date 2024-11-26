@@ -3,7 +3,7 @@ package com.hyuuny.resellshop.products.infrastructure
 import com.hyuuny.resellshop.products.domain.Brand
 import java.time.LocalDate
 
-data class InsertProduct(
+data class NewProduct(
     val categoryId: Long,
     val nameEn: String,
     val brand: Brand,
@@ -12,14 +12,14 @@ data class InsertProduct(
     val modelNumber: String,
     val releaseDate: LocalDate?,
     val option: String,
-    val images: List<InsertProductImage>,
-    val sizes: List<InsertProductSize>
+    val images: List<NewProductImage>,
+    val sizes: List<NewProductSize>
 )
 
-data class InsertProductImage(
+data class NewProductImage(
     val imageUrl: String,
 )
 
-data class InsertProductSize(
+data class NewProductSize(
     val size: String,
 )

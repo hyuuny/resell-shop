@@ -1,9 +1,9 @@
 package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.products.domain.Brand
-import com.hyuuny.resellshop.products.infrastructure.InsertProduct
-import com.hyuuny.resellshop.products.infrastructure.InsertProductImage
-import com.hyuuny.resellshop.products.infrastructure.InsertProductSize
+import com.hyuuny.resellshop.products.infrastructure.NewProduct
+import com.hyuuny.resellshop.products.infrastructure.NewProductImage
+import com.hyuuny.resellshop.products.infrastructure.NewProductSize
 import java.time.LocalDate
 
 data class CreateProductCommand(
@@ -18,20 +18,18 @@ data class CreateProductCommand(
     val images: List<ProductImageCommand>,
     val sizes: List<ProductSizeCommand>,
 ) {
-    fun toInsertProduct(): InsertProduct {
-        return InsertProduct(
-            categoryId = categoryId,
-            brand = brand,
-            nameEn = nameEn,
-            nameKo = nameKo,
-            releasePrice = releasePrice,
-            modelNumber = modelNumber,
-            releaseDate = releaseDate,
-            option = option,
-            images = images.map { InsertProductImage(it.imageUrl) },
-            sizes = sizes.map { InsertProductSize(it.size) }
-        )
-    }
+    fun toNewProduct(): NewProduct = NewProduct(
+        categoryId = categoryId,
+        brand = brand,
+        nameEn = nameEn,
+        nameKo = nameKo,
+        releasePrice = releasePrice,
+        modelNumber = modelNumber,
+        releaseDate = releaseDate,
+        option = option,
+        images = images.map { NewProductImage(it.imageUrl) },
+        sizes = sizes.map { NewProductSize(it.size) }
+    )
 }
 
 data class ProductImageCommand(

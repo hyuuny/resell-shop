@@ -11,19 +11,19 @@ class ProductWriterImpl(
     private val repository: ProductRepository,
 ) : ProductWriter {
 
-    override fun insert(insertProduct: InsertProduct): Product {
+    override fun write(newProduct: NewProduct): Product {
         val product = Product.of(
-            categoryId = insertProduct.categoryId,
-            nameEn = insertProduct.nameEn,
-            brand = insertProduct.brand,
-            nameKo = insertProduct.nameKo,
-            releasePrice = insertProduct.releasePrice,
-            modelNumber = insertProduct.modelNumber,
-            releaseDate = insertProduct.releaseDate,
-            option = insertProduct.option,
+            categoryId = newProduct.categoryId,
+            nameEn = newProduct.nameEn,
+            brand = newProduct.brand,
+            nameKo = newProduct.nameKo,
+            releasePrice = newProduct.releasePrice,
+            modelNumber = newProduct.modelNumber,
+            releaseDate = newProduct.releaseDate,
+            option = newProduct.option,
         )
-        val productImages = insertProduct.images.map { ProductImage.of(product, it.imageUrl) }
-        val productSizes = insertProduct.sizes.map { ProductSize.of(product, it.size) }
+        val productImages = newProduct.images.map { ProductImage.of(product, it.imageUrl) }
+        val productSizes = newProduct.sizes.map { ProductSize.of(product, it.size) }
 
         product.addImages(productImages)
         product.addSizes(productSizes)

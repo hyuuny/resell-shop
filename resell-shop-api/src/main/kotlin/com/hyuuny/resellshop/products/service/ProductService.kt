@@ -16,17 +16,17 @@ class ProductService(
 
     @Transactional
     fun create(command: CreateProductCommand): ProductResponse {
-        val newProduct = writer.insert(command.toInsertProduct())
+        val newProduct = writer.write(command.toNewProduct())
         return ProductResponse(newProduct)
     }
 
     fun getProduct(id: Long): ProductResponse {
-        val product = reader.findById(id)
+        val product = reader.read(id)
         return ProductResponse(product)
     }
 
     fun getAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<ProductSearchResponse> {
-        val page = reader.findAllBySearchCommand(searchCommand, pageable)
+        val page = reader.readPage(searchCommand, pageable)
         val content = page.content.map { ProductSearchResponse(it) }
         return SimplePage(content, page)
     }
