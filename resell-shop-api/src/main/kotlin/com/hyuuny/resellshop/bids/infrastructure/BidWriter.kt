@@ -6,4 +6,6 @@ interface BidWriter {
 
     fun insert(insertBid: InsertBid): Bid
 
+    fun changePrice(changePriceBid: ChangePriceBid)
+
 }

@@ -12,16 +12,12 @@ import org.springframework.transaction.annotation.Transactional
 class BidService(
     private val writer: BidWriter,
     private val reader: BidReader,
-    private val validator: BidValidator,
     private val productReader: ProductReader,
 ) {
     companion object : Log
 
     @Transactional
     fun create(command: CreateBidCommand): BidResponse {
-        validator.verifyExistsBid(command.type, command.userId, command.productId)
-        validator.validateBidPrice(command.price)
-
         log.info("입찰 등록 요청: $command")
         val newBid = writer.insert(command.toInsertBid())
         return BidResponse(newBid)
@@ -29,8 +25,6 @@ class BidService(
 
     @Transactional
     fun changePrice(id: Long, command: ChangePriceCommand) {
-        validator.validateBidPrice(command.price)
-
         val bid = reader.findById(id)
         bid.changePrice(command.price)
     }
