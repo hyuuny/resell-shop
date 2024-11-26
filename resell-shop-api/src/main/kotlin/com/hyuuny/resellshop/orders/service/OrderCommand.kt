@@ -1,6 +1,9 @@
 package com.hyuuny.resellshop.orders.service
 
-import com.hyuuny.resellshop.orders.infrastructure.InsertOrder
+import com.hyuuny.resellshop.orders.domain.OrderStatus
+import com.hyuuny.resellshop.orders.infrastructure.NewOrder
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class CreateOrderCommand(
     val orderNumber: String,
@@ -12,16 +15,25 @@ data class CreateOrderCommand(
     val productPrice: Long,
     val totalPrice: Long,
 ) {
-    fun toInsertOrder(): InsertOrder {
-        return InsertOrder(
-            orderNumber = orderNumber,
-            sellerId = sellerId,
-            buyerId = buyerId,
-            bidId = bidId,
-            commission = commission,
-            deliveryFee = deliveryFee,
-            productPrice = productPrice,
-            totalPrice = totalPrice
-        )
-    }
+    fun toNewOrder(): NewOrder = NewOrder(
+        orderNumber = orderNumber,
+        sellerId = sellerId,
+        buyerId = buyerId,
+        bidId = bidId,
+        commission = commission,
+        deliveryFee = deliveryFee,
+        productPrice = productPrice,
+        totalPrice = totalPrice
+    )
+}
+
+data class OrderSearchCommand(
+    val orderNumber: String? = null,
+    val status: OrderStatus? = null,
+    val sellerId: Long? = null,
+    val buyerId: Long? = null,
+    val fromDate: LocalDate? = null,
+    val toDate: LocalDate? = null,
+) {
+    fun getMaxToDateTime(): LocalDateTime? = toDate?.atTime(23, 59, 59)
 }

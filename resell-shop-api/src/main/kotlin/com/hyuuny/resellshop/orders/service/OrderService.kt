@@ -18,16 +18,16 @@ class OrderService(
 
     @Transactional
     fun create(command: CreateOrderCommand): OrderResponse {
-        val newOrder = writer.insert(command.toInsertOrder())
+        val newOrder = writer.write(command.toNewOrder())
         eventPublisher.publishEvent(BidStatusChangedEvent(newOrder.bidId, BidStatus.COMPLETED))
         return OrderResponse(newOrder)
     }
 
-    fun findById(id: Long): OrderResponse = OrderResponse(reader.findById(id))
+    fun findById(id: Long): OrderResponse = OrderResponse(reader.read(id))
 
     @Transactional
     fun cancel(id: Long) {
-        val order = reader.findById(id)
+        val order = reader.read(id)
         writer.cancel(order)
         eventPublisher.publishEvent(BidStatusChangedEvent(order.bidId, BidStatus.CANCELLED))
     }

@@ -1,6 +1,6 @@
 package com.hyuuny.resellshop.orders.infrastructure
 
-data class InsertOrder(
+data class NewOrder(
     val orderNumber: String,
     val sellerId: Long,
     val buyerId: Long,

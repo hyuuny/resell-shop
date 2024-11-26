@@ -4,7 +4,7 @@ import com.hyuuny.resellshop.orders.domain.Order
 
 interface OrderWriter {
 
-    fun insert(insertOrder: InsertOrder): Order
+    fun write(newOrder: NewOrder): Order
 
     fun cancel(order: Order)
 }

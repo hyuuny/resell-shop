@@ -12,17 +12,17 @@ class OrderWriterImpl(
     private val repository: OrderRepository,
 ) : OrderWriter {
 
-    override fun insert(insertOrder: InsertOrder): Order = repository.save(
+    override fun write(newOrder: NewOrder): Order = repository.save(
         Order.of(
             status = OrderStatus.CREATED,
-            orderNumber = insertOrder.orderNumber,
-            sellerId = insertOrder.sellerId,
-            buyerId = insertOrder.buyerId,
-            bidId = insertOrder.bidId,
-            commission = insertOrder.commission,
-            deliveryFee = insertOrder.deliveryFee,
-            productPrice = insertOrder.productPrice,
-            totalPrice = insertOrder.totalPrice,
+            orderNumber = newOrder.orderNumber,
+            sellerId = newOrder.sellerId,
+            buyerId = newOrder.buyerId,
+            bidId = newOrder.bidId,
+            commission = newOrder.commission,
+            deliveryFee = newOrder.deliveryFee,
+            productPrice = newOrder.productPrice,
+            totalPrice = newOrder.totalPrice,
             createdAt = LocalDateTime.now(),
         )
     )

@@ -4,6 +4,6 @@ import com.hyuuny.resellshop.orders.domain.Order
 
 interface OrderReader {
 
-    fun findById(id: Long): Order
+    fun read(id: Long): Order
 
 }
