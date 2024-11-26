@@ -12,12 +12,12 @@ import kotlin.math.min
 class ProductRepositoryImpl : QuerydslRepositorySupport(Product::class.java), ProductRepositoryCustom {
 
     override fun findAllBySearchCommand(
-        searchCondition: ProductSearchCommand,
+        searchCommand: ProductSearchCommand,
         pageable: Pageable
     ): SimplePage<Product> {
         var query = from(product)
 
-        with(searchCondition) {
+        with(searchCommand) {
             categoryId?.let { query = query.where(product.categoryId.eq(it)) }
             brand?.let { query = query.where(product.brand.eq(it)) }
             nameKo?.let { query = query.where(product.nameKo.contains(it)) }
