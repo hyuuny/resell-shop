@@ -1,7 +1,9 @@
 package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.bids.dataaccess.BidRepository
+import com.hyuuny.resellshop.bids.domain.Bid
 import com.hyuuny.resellshop.bids.domain.BidStatus
+import com.hyuuny.resellshop.bids.domain.BidType
 import com.hyuuny.resellshop.bids.domain.event.BidEventListener
 import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
 import com.hyuuny.resellshop.core.common.exception.NotCancelableOrderException
@@ -12,6 +14,11 @@ import com.hyuuny.resellshop.orders.domain.Order
 import com.hyuuny.resellshop.orders.domain.OrderHistory
 import com.hyuuny.resellshop.orders.domain.OrderStatus
 import com.hyuuny.resellshop.products.TestEnvironment
+import com.hyuuny.resellshop.products.dataaccess.ProductRepository
+import com.hyuuny.resellshop.products.domain.Brand
+import com.hyuuny.resellshop.products.domain.Product
+import com.hyuuny.resellshop.products.domain.ProductImage
+import com.hyuuny.resellshop.products.domain.ProductSize
 import com.hyuuny.resellshop.utils.generateOrderNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -22,7 +29,11 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @TestEnvironment
@@ -31,6 +42,7 @@ class OrderServiceTest(
     private val orderHistoryRepository: OrderHistoryRepository,
     private val service: OrderService,
     private val bidRepository: BidRepository,
+    private val productRepository: ProductRepository,
 ) {
 
     @MockBean
@@ -41,6 +53,7 @@ class OrderServiceTest(
         repository.deleteAll()
         orderHistoryRepository.deleteAll()
         bidRepository.deleteAll()
+        productRepository.deleteAll()
     }
 
     @Test
@@ -191,6 +204,62 @@ class OrderServiceTest(
             service.cancel(savedOrder.id!!)
         }
         assertThat(exception.message).isEqualTo("주문을 취소할 수 상태입니다.")
+    }
+
+    @Test
+    fun `주문 목록을 조회할 수 있다`() {
+        for (i in 1L..13L) {
+            val product = Product.of(
+                categoryId = i,
+                brand = Brand.NIKE,
+                nameEn = "product$i",
+                nameKo = "상품$i",
+                releasePrice = 30000L,
+                modelNumber = "390395${i}",
+                releaseDate = LocalDate.now(),
+                option = "BLUE",
+            )
+            val image = ProductImage.of(product, "image")
+            val size = ProductSize.of(product, "M")
+            product.addImage(image)
+            product.addSize(size)
+            val savedProduct = productRepository.save(product)
+
+            val orderNumber = generateOrderNumber(LocalDateTime.now())
+            val bid = Bid.of(
+                type = BidType.BUY,
+                orderNumber = orderNumber,
+                userId = i,
+                productId = savedProduct.id!!,
+                productSizeId = savedProduct.sizes.first().id!!,
+                price = 10000L,
+                createdAt = LocalDateTime.now(),
+            )
+            bidRepository.save(bid)
+
+            val order = Order.of(
+                status = OrderStatus.CREATED,
+                orderNumber = generateOrderNumber(LocalDateTime.now()),
+                sellerId = 1L,
+                buyerId = i,
+                bidId = bid.id!!,
+                commission = 3200L,
+                deliveryFee = 3000L,
+                productPrice = bid.price.amount,
+                totalPrice = 3200L + 3000L + bid.price.amount,
+                createdAt = LocalDateTime.now(),
+            )
+            repository.save(order)
+        }
+        val searchCommand = OrderSearchCommand()
+        val pageable: Pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"))
+
+        val response = service.search(searchCommand, pageable)
+
+        assertThat(response.content).hasSize(10)
+        assertThat(response.page).isEqualTo(1)
+        assertThat(response.size).isEqualTo(10)
+        assertThat(response.last).isEqualTo(false)
     }
 
 }

@@ -17,6 +17,8 @@ class ProductReaderImpl(
     override fun read(id: Long): Product =
         repository.findByIdOrNull(id) ?: throw ProductNotFoundException("상품을 찾을 수 없습니다. id: $id")
 
+    override fun read(ids: List<Long>): List<Product> = repository.findAllById(ids)
+
     override fun readPage(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<Product> {
         return repository.findAllBySearchCommand(searchCommand, pageable)
     }

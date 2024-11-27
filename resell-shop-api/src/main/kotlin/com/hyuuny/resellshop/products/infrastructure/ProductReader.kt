@@ -9,6 +9,8 @@ interface ProductReader {
 
     fun read(id: Long): Product
 
+    fun read(ids: List<Long>): List<Product>
+
     fun readPage(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<Product>
 
 }

@@ -2,6 +2,7 @@ package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.orders.domain.Order
 import com.hyuuny.resellshop.orders.domain.OrderStatus
+import com.hyuuny.resellshop.products.domain.Product
 import java.time.LocalDateTime
 
 data class OrderResponse(
@@ -28,6 +29,26 @@ data class OrderResponse(
         deliveryFee = entity.deliveryFee.amount,
         productPrice = entity.productPrice.amount,
         totalPrice = entity.totalPrice.amount,
+        createdAt = entity.createdAt,
+    )
+}
+
+data class OrderSearchResponse(
+    val id: Long,
+    val orderNumber: String,
+    val status: OrderStatus,
+    val buyerId: Long,
+    val productNameEn: String,
+    val productThumbnailUrl: String,
+    val createdAt: LocalDateTime,
+) {
+    constructor(entity: Order, product: Product) : this(
+        id = entity.id!!,
+        orderNumber = entity.orderNumber,
+        status = entity.status,
+        buyerId = entity.buyerId,
+        productNameEn = product.nameEn,
+        productThumbnailUrl = product.getFirstImageUrlOrEmpty(),
         createdAt = entity.createdAt,
     )
 }
