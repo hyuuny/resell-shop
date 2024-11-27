@@ -179,7 +179,7 @@ class ProductServiceTest(
         val searchCommand = ProductSearchCommand()
         val pageable: Pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"))
 
-        val result = service.getAllBySearchCommand(searchCommand, pageable)
+        val result = service.search(searchCommand, pageable)
 
         assertThat(result.content).hasSize(3)
         assertThat(result.content[0].id).isEqualTo(savedProductThree.id)
@@ -221,7 +221,7 @@ class ProductServiceTest(
         val searchCommand = ProductSearchCommand(nameKo = "스투시 x 아워레가시")
         val pageable: Pageable = PageRequest.of(0, 10)
 
-        val result = service.getAllBySearchCommand(searchCommand, pageable)
+        val result = service.search(searchCommand, pageable)
 
         assertThat(result.content).hasSize(1)
         assertThat(result.content[0].id).isEqualTo(savedProduct.id)

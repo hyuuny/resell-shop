@@ -26,7 +26,7 @@ class ProductRestController(
         searchCommand: ProductSearchCommand,
         @PageableDefault(sort = ["id"], direction = Sort.Direction.DESC) pageable: Pageable
     ): ResponseEntity<ResellShopResponse<SimplePage<ProductSearchResponse>>> {
-        val products = service.getAllBySearchCommand(searchCommand, pageable)
+        val products = service.search(searchCommand, pageable)
         return ResponseEntity.ok(ResellShopResponse.success(products))
     }
 

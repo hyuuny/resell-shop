@@ -25,7 +25,7 @@ class ProductService(
         return ProductResponse(product)
     }
 
-    fun getAllBySearchCommand(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<ProductSearchResponse> {
+    fun search(searchCommand: ProductSearchCommand, pageable: Pageable): SimplePage<ProductSearchResponse> {
         val page = reader.readPage(searchCommand, pageable)
         val content = page.content.map { ProductSearchResponse(it) }
         return SimplePage(content, page)
