@@ -350,4 +350,21 @@ class BidRestControllerTest(
         }
     }
 
+    @Test
+    fun `존재하지 않는 입찰 내역을 삭제할 수 없다`() {
+        val invalidId = 999999L
+        Given {
+            contentType(ContentType.JSON)
+            pathParams("id", invalidId)
+            log().all()
+        } When {
+            delete("/api/v1/bids/{id}")
+        } Then {
+            statusCode(HttpStatus.SC_BAD_REQUEST)
+            body("code", equalTo(ErrorType.BID_NOT_FOUND.name))
+            body("message", equalTo("입찰 내역을 찾을 수 없습니다. id: $invalidId"))
+            log().all()
+        }
+    }
+
 }
