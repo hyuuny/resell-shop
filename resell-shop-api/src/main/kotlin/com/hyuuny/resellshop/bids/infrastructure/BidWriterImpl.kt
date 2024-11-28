@@ -39,6 +39,8 @@ class BidWriterImpl(
         bid.changePrice(changePriceBid.newPrice)
     }
 
+    override fun delete(id: Long) = repository.deleteById(id)
+
     private fun verifyExistsBid(type: BidType, userId: Long, productSizeId: Long) {
         repository.findByTypeAndUserIdAndProductSizeIdAndStatusIn(
             type = type,

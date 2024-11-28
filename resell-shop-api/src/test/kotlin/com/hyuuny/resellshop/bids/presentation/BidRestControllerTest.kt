@@ -327,4 +327,27 @@ class BidRestControllerTest(
         }
     }
 
+    @Test
+    fun `등록한 입찰 내역을 삭제할 수 있다`() {
+        val command = CreateBidCommand(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 55000,
+        )
+        val savedBid = service.create(command)
+
+        Given {
+            contentType(ContentType.JSON)
+            pathParams("id", savedBid.id)
+            log().all()
+        } When {
+            delete("/api/v1/bids/{id}")
+        } Then {
+            statusCode(HttpStatus.SC_OK)
+            log().all()
+        }
+    }
+
 }

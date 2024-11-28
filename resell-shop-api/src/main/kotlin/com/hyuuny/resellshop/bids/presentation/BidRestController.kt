@@ -39,4 +39,10 @@ class BidRestController(
         return ResponseEntity.ok().build()
     }
 
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<ResellShopResponse<Unit>> {
+        service.delete(id)
+        return ResponseEntity.ok().build()
+    }
+
 }

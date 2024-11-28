@@ -35,4 +35,10 @@ class BidService(
         return ProductBidPriceResponse(productId, minBidPriceDetails)
     }
 
+    @Transactional
+    fun delete(id: Long) {
+        val bid = reader.read(id)
+        writer.delete(bid.id!!)
+    }
+
 }

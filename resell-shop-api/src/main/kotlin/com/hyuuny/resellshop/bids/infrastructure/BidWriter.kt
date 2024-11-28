@@ -8,4 +8,6 @@ interface BidWriter {
 
     fun changePrice(changePriceBid: ChangePriceBid)
 
+    fun delete(id: Long)
+
 }

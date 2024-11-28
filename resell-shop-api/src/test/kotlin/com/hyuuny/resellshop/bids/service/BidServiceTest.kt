@@ -288,4 +288,20 @@ class BidServiceTest(
         assertThat(exception.message).isEqualTo("입찰 내역을 찾을 수 없습니다. id: $invalidId")
     }
 
+    @Test
+    fun `등록한 입찰 내역을 삭제할 수 있다`() {
+        val command = CreateBidCommand(
+            type = BidType.SELL,
+            userId = 1L,
+            productId = 1L,
+            productSizeId = 1L,
+            price = 55000,
+        )
+        val savedBid = service.create(command)
+
+        service.delete(savedBid.id)
+
+        assertThat(repository.findByIdOrNull(savedBid.id)).isNull()
+    }
+
 }
