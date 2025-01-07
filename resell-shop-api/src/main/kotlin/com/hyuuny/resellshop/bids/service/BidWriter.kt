@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.bids.infrastructure
+package com.hyuuny.resellshop.bids.service
 
 import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.Bid
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class BidWriterImpl(
+class BidWriter(
     private val repository: BidRepository,
-) : BidWriter {
+) {
 
-    override fun write(newBid: NewBid): Bid {
+    fun write(newBid: NewBid): Bid {
         verifyExistsBid(newBid.type, newBid.userId, newBid.productSizeId)
         validateBidPrice(newBid.price)
 
@@ -32,14 +32,7 @@ class BidWriterImpl(
         return repository.save(bid)
     }
 
-    override fun changePrice(changePriceBid: ChangePriceBid) {
-        validateBidPrice(changePriceBid.newPrice)
-
-        val bid = changePriceBid.bid
-        bid.changePrice(changePriceBid.newPrice)
-    }
-
-    override fun delete(id: Long) = repository.deleteById(id)
+    fun delete(id: Long) = repository.deleteById(id)
 
     private fun verifyExistsBid(type: BidType, userId: Long, productSizeId: Long) {
         repository.findByTypeAndUserIdAndProductSizeIdAndStatusIn(

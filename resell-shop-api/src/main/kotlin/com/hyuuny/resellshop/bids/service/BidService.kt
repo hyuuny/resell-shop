@@ -1,9 +1,7 @@
 package com.hyuuny.resellshop.bids.service
 
-import com.hyuuny.resellshop.bids.infrastructure.BidReader
-import com.hyuuny.resellshop.bids.infrastructure.BidWriter
 import com.hyuuny.resellshop.core.logging.Log
-import com.hyuuny.resellshop.products.infrastructure.ProductReader
+import com.hyuuny.resellshop.products.service.ProductReader
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

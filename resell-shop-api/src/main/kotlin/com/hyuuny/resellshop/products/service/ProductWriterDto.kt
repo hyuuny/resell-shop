@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.products.infrastructure
+package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.products.domain.Brand
 import java.time.LocalDate

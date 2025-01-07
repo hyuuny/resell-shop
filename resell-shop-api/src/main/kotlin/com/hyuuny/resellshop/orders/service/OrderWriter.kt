@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.orders.infrastructure
+package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.core.common.exception.NotCancelableOrderException
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class OrderWriterImpl(
+class OrderWriter(
     private val repository: OrderRepository,
-) : OrderWriter {
+) {
 
-    override fun write(newOrder: NewOrder): Order = repository.save(
+    fun write(newOrder: NewOrder): Order = repository.save(
         Order.of(
             status = OrderStatus.CREATED,
             orderNumber = newOrder.orderNumber,
@@ -27,7 +27,7 @@ class OrderWriterImpl(
         )
     )
 
-    override fun cancel(order: Order) {
+    fun cancel(order: Order) {
         if (!order.isCancelable()) throw NotCancelableOrderException("주문을 취소할 수 상태입니다.")
         order.cancel()
     }

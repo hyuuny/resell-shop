@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.categories.infrastructure
+package com.hyuuny.resellshop.categories.service
 
 import com.hyuuny.resellshop.categories.dataaccess.CategoryRepository
 import com.hyuuny.resellshop.categories.domain.Category
@@ -7,13 +7,12 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
-class CategoryReaderImpl(
+class CategoryReader(
     private val repository: CategoryRepository,
-) : CategoryReader {
+) {
 
-    override fun read(id: Long): Category = repository.findByIdOrNull(id)
+    fun read(id: Long): Category = repository.findByIdOrNull(id)
         ?: throw CategoryNotFoundException("카테고리를 찾을 수 없습니다. id: $id")
 
-    override fun readAll(): List<Category> = repository.findAll()
-
+    fun readAll(): List<Category> = repository.findAll()
 }

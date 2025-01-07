@@ -1,6 +1,5 @@
 package com.hyuuny.resellshop.categories.service
 
-import com.hyuuny.resellshop.categories.infrastructure.CategoryReader
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

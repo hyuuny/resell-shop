@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.products.infrastructure
+package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.products.domain.Product
@@ -7,11 +7,11 @@ import com.hyuuny.resellshop.products.domain.ProductSize
 import org.springframework.stereotype.Component
 
 @Component
-class ProductWriterImpl(
+class ProductWriter(
     private val repository: ProductRepository,
-) : ProductWriter {
+) {
 
-    override fun write(newProduct: NewProduct): Product {
+    fun write(newProduct: NewProduct): Product {
         val product = Product.of(
             categoryId = newProduct.categoryId,
             nameEn = newProduct.nameEn,

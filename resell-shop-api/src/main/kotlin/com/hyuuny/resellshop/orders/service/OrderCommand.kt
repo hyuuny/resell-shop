@@ -1,7 +1,6 @@
 package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.orders.domain.OrderStatus
-import com.hyuuny.resellshop.orders.infrastructure.NewOrder
 import java.time.LocalDate
 import java.time.LocalDateTime
 
