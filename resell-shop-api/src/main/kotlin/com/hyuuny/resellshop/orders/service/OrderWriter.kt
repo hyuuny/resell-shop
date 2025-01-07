@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.orders.infrastructure
+package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.orders.domain.Order
 

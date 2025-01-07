@@ -1,9 +1,6 @@
 package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.products.domain.Brand
-import com.hyuuny.resellshop.products.infrastructure.NewProduct
-import com.hyuuny.resellshop.products.infrastructure.NewProductImage
-import com.hyuuny.resellshop.products.infrastructure.NewProductSize
 import java.time.LocalDate
 
 data class CreateProductCommand(

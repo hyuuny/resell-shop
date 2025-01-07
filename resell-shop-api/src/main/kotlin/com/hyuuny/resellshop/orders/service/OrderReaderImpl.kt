@@ -1,10 +1,9 @@
-package com.hyuuny.resellshop.orders.infrastructure
+package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.core.common.exception.OrderNotFoundException
 import com.hyuuny.resellshop.core.common.response.SimplePage
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository
 import com.hyuuny.resellshop.orders.domain.Order
-import com.hyuuny.resellshop.orders.service.OrderSearchCommand
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component

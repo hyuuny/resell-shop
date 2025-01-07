@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.orders.infrastructure
+package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.core.common.exception.NotCancelableOrderException
 import com.hyuuny.resellshop.orders.dataaccess.OrderRepository

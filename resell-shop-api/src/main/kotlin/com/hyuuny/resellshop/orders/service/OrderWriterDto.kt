@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.orders.infrastructure
+package com.hyuuny.resellshop.orders.service
 
 data class NewOrder(
     val orderNumber: String,

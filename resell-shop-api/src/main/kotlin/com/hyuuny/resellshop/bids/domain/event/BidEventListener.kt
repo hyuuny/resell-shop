@@ -1,8 +1,8 @@
 package com.hyuuny.resellshop.bids.domain.event
 
-import com.hyuuny.resellshop.bids.infrastructure.BidHistoryWriter
-import com.hyuuny.resellshop.bids.infrastructure.BidReader
-import com.hyuuny.resellshop.bids.infrastructure.InsertBidHistory
+import com.hyuuny.resellshop.bids.service.BidHistoryWriter
+import com.hyuuny.resellshop.bids.service.BidReader
+import com.hyuuny.resellshop.bids.service.InsertBidHistory
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionalEventListener

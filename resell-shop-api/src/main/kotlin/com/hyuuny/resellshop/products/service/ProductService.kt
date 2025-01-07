@@ -1,8 +1,6 @@
 package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.core.common.response.SimplePage
-import com.hyuuny.resellshop.products.infrastructure.ProductReader
-import com.hyuuny.resellshop.products.infrastructure.ProductWriter
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -1,7 +1,6 @@
 package com.hyuuny.resellshop.bids.service
 
 import com.hyuuny.resellshop.bids.domain.BidType
-import com.hyuuny.resellshop.bids.infrastructure.NewBid
 
 data class CreateBidCommand(
     val type: BidType,

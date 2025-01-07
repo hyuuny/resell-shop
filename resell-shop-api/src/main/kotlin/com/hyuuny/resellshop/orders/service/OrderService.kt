@@ -2,12 +2,10 @@ package com.hyuuny.resellshop.orders.service
 
 import com.hyuuny.resellshop.bids.domain.BidStatus
 import com.hyuuny.resellshop.bids.domain.event.BidStatusChangedEvent
-import com.hyuuny.resellshop.bids.infrastructure.BidReader
+import com.hyuuny.resellshop.bids.service.BidReader
 import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import com.hyuuny.resellshop.core.common.response.SimplePage
-import com.hyuuny.resellshop.orders.infrastructure.OrderReader
-import com.hyuuny.resellshop.orders.infrastructure.OrderWriter
-import com.hyuuny.resellshop.products.infrastructure.ProductReader
+import com.hyuuny.resellshop.products.service.ProductReader
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service

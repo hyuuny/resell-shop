@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.bids.infrastructure
+package com.hyuuny.resellshop.bids.service
 
 import com.hyuuny.resellshop.bids.dataaccess.BidHistoryRepository
 import com.hyuuny.resellshop.bids.domain.BidHistory

@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.categories.infrastructure
+package com.hyuuny.resellshop.categories.service
 
 import com.hyuuny.resellshop.categories.domain.Category
 

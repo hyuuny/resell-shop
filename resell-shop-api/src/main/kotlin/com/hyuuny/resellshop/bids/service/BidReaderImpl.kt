@@ -1,8 +1,7 @@
-package com.hyuuny.resellshop.bids.infrastructure
+package com.hyuuny.resellshop.bids.service
 
 import com.hyuuny.resellshop.bids.dataaccess.BidRepository
 import com.hyuuny.resellshop.bids.domain.Bid
-import com.hyuuny.resellshop.bids.service.BidPriceDetailsResponse
 import com.hyuuny.resellshop.core.common.exception.BidNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component

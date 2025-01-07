@@ -1,4 +1,4 @@
-package com.hyuuny.resellshop.products.infrastructure
+package com.hyuuny.resellshop.products.service
 
 import com.hyuuny.resellshop.products.dataaccess.ProductRepository
 import com.hyuuny.resellshop.products.domain.Product
